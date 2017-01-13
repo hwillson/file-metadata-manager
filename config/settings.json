@@ -1,0 +1,15 @@
+{
+  "public": {
+    "title": "ACME File Manager",
+    "company": {
+      "name": "ACME Inc.",
+      "url": "http://acmeinc.fake"
+    }
+  },
+  "private": {
+    "admin": {
+      "email": "admin@octonary.com",
+      "password": "some-random-password-awesomeness"
+    }
+  }
+}
