@@ -1,14 +1,14 @@
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-import AppLayout from '../layouts/AppLayout';
+import Login from '../components/login/Login';
 
-const AppContainer = createContainer(() => {
+const LoginContainer = createContainer(() => {
   const usersHandle = Meteor.subscribe('users.all');
   return {
     usersReady: usersHandle.ready(),
     user: Meteor.user(),
   };
-}, AppLayout);
+}, Login);
 
-export default AppContainer;
+export default LoginContainer;
