@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { Table, Tr, Td } from 'reactable';
+import { StyleSheet, css } from 'aphrodite';
 
 import FilePath from './FilePath';
 import currentDirectoryListing from '../../../api/files/methods';
+
+let styles;
 
 class Files extends Component {
   constructor(props) {
@@ -77,27 +80,49 @@ class Files extends Component {
 
   render() {
     return (
-      <Row className="files">
-        <Col md={12}>
-          <div className="card">
-            <div className="header">
+      <div className="files">
+        <div className="card">
+          <Row className="header">
+            <Col md={8}>
               <h4 className="title">
                 Directory: <FilePath
                   path={this.state.currentDirectory}
                   setCurrentDirectory={this.setCurrentDirectory}
                 />
               </h4>
-            </div>
-            <div className="files">
+            </Col>
+            <Col md={4} className="text-right">
+              <Button
+                bsStyle="info"
+                className={`btn-fill ${css(styles.marginRight10)}`}
+              >
+                <i className="fa fa-plus" /> New Directory
+              </Button>
+              <Button bsStyle="info" className="btn-fill">
+                <i className="fa fa-plus-circle" /> New File
+              </Button>
+            </Col>
+          </Row>
+          <Row className={css(styles.marginTop20)}>
+            <Col md={12}>
               <Table className="table">
                 {this.renderRows()}
               </Table>
-            </div>
-          </div>
-        </Col>
-      </Row>
+            </Col>
+          </Row>
+        </div>
+      </div>
     );
   }
 }
+
+styles = StyleSheet.create({
+  marginRight10: {
+    marginRight: 10,
+  },
+  marginTop20: {
+    marginTop: 20,
+  },
+});
 
 export default Files;
