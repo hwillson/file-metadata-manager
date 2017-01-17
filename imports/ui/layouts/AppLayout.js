@@ -26,9 +26,7 @@ class AppLayout extends Component {
               <Header title={this.props.children.props.route.title} />
               <div className="content">
                 <div className="container-fluid">
-                  <div className="row">
-                    {this.props.children}
-                  </div>
+                  {this.props.children}
                 </div>
               </div>
               <Footer />

@@ -10,6 +10,9 @@
     "admin": {
       "email": "admin@octonary.com",
       "password": "some-random-password-awesomeness"
+    },
+    "files": {
+      "rootDirectory": "/nas/files"
     }
   }
 }

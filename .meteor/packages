@@ -22,3 +22,6 @@ practicalmeteor:mocha
 std:accounts-ui
 accounts-password
 react-meteor-data
+aldeed:simple-schema
+aldeed:collection2
+mdg:validated-method
