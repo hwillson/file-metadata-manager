@@ -92,37 +92,35 @@ class Files extends Component {
   render() {
     return (
       <div className="files">
-        <div className="card">
-          <Row className="header">
-            <Col md={8}>
-              <h4 className="title">
-                Directory: <FilePath
-                  path={this.state.currentDirectory}
-                  setCurrentDirectory={this.setCurrentDirectory}
-                />
-              </h4>
-            </Col>
-            <Col md={4} className="text-right">
-              <Button
-                bsStyle="info"
-                className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
-                onClick={this.openModal}
-              >
-                <i className="fa fa-plus" /> New Directory
-              </Button>
-              <Button bsStyle="info" className="btn-fill">
-                <i className="fa fa-plus-circle" /> New File
-              </Button>
-            </Col>
-          </Row>
-          <Row className={css(UtilityStyles.marginTop20)}>
-            <Col md={12}>
-              <Table className="table">
-                {this.renderRows()}
-              </Table>
-            </Col>
-          </Row>
-        </div>
+        <Row className="header">
+          <Col md={8}>
+            <h4 className="title">
+              Directory: <FilePath
+                path={this.state.currentDirectory}
+                setCurrentDirectory={this.setCurrentDirectory}
+              />
+            </h4>
+          </Col>
+          <Col md={4} className="text-right">
+            <Button
+              bsStyle="info"
+              className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
+              onClick={this.openModal}
+            >
+              <i className="fa fa-plus" /> New Directory
+            </Button>
+            <Button bsStyle="info" className="btn-fill">
+              <i className="fa fa-plus-circle" /> New File
+            </Button>
+          </Col>
+        </Row>
+        <Row className={css(UtilityStyles.marginTop20)}>
+          <Col md={12}>
+            <Table className="table">
+              {this.renderRows()}
+            </Table>
+          </Col>
+        </Row>
 
         <NewDirectoryModal
           showModal={this.state.showModal}

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import { css } from 'aphrodite';
 
 import Sidebar from '../components/sidebar/Sidebar';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Loading from '../components/loading/Loading';
+import UtilityStyles from '../styles/utility';
 
 class AppLayout extends Component {
   componentWillReceiveProps(newProps) {
@@ -25,7 +27,9 @@ class AppLayout extends Component {
             <div className="main-panel">
               <Header title={this.props.children.props.route.title} />
               <div className="content">
-                <div className="container-fluid">
+                <div
+                  className={`container-fluid card ${css(UtilityStyles.paddingTopBottom15)}`}
+                >
                   {this.props.children}
                 </div>
               </div>
