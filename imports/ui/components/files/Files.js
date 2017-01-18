@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Table, Tr, Td } from 'reactable';
-import { StyleSheet, css } from 'aphrodite';
+import { css } from 'aphrodite';
 
 import FilePath from './FilePath';
+import NewDirectoryModal from './NewDirectoryModal';
 import currentDirectoryListing from '../../../api/files/methods';
-
-let styles;
+import UtilityStyles from '../../styles/utility';
 
 class Files extends Component {
   constructor(props) {
@@ -14,8 +14,11 @@ class Files extends Component {
     this.state = {
       currentDirectory: '',
       files: [],
+      showModal: false,
     };
     this.setCurrentDirectory = this.setCurrentDirectory.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +49,14 @@ class Files extends Component {
         this.setState({ files });
       }
     });
+  }
+
+  openModal() {
+    this.setState({ showModal: true });
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
   }
 
   renderRows() {
@@ -94,7 +105,8 @@ class Files extends Component {
             <Col md={4} className="text-right">
               <Button
                 bsStyle="info"
-                className={`btn-fill ${css(styles.marginRight10)}`}
+                className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
+                onClick={this.openModal}
               >
                 <i className="fa fa-plus" /> New Directory
               </Button>
@@ -103,7 +115,7 @@ class Files extends Component {
               </Button>
             </Col>
           </Row>
-          <Row className={css(styles.marginTop20)}>
+          <Row className={css(UtilityStyles.marginTop20)}>
             <Col md={12}>
               <Table className="table">
                 {this.renderRows()}
@@ -111,18 +123,14 @@ class Files extends Component {
             </Col>
           </Row>
         </div>
+
+        <NewDirectoryModal
+          showModal={this.state.showModal}
+          closeModal={this.closeModal}
+        />
       </div>
     );
   }
 }
-
-styles = StyleSheet.create({
-  marginRight10: {
-    marginRight: 10,
-  },
-  marginTop20: {
-    marginTop: 20,
-  },
-});
 
 export default Files;

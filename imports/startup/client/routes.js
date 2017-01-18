@@ -4,6 +4,7 @@ import { Router, Route, browserHistory, Redirect } from 'react-router';
 import AppContainer from '../../ui/containers/AppContainer';
 import WelcomePage from '../../ui/pages/WelcomePage';
 import FilesPage from '../../ui/pages/FilesPage';
+import CategoriesPage from '../../ui/pages/CategoriesPage';
 import LoginContainer from '../../ui/containers/LoginContainer';
 import Logout from '../../ui/components/logout/Logout';
 
@@ -15,6 +16,7 @@ const renderRoutes = () => (
     <Route component={AppContainer}>
       <Route path="welcome" component={WelcomePage} title="Welcome" />
       <Route path="files" component={FilesPage} title="Files" />
+      <Route path="categories" component={CategoriesPage} title="Categories" />
     </Route>
   </Router>
 );

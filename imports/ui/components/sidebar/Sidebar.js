@@ -23,6 +23,12 @@ const Sidebar = () => (
             <p>Files</p>
           </Link>
         </li>
+        <li>
+          <Link to="/categories" activeClassName="active">
+            <i className="pe-7s-network" />
+            <p>Categories</p>
+          </Link>
+        </li>
       </ul>
     </div>
   </div>
