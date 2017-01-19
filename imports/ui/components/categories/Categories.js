@@ -3,6 +3,7 @@ import { Table, Tr, Td } from 'reactable';
 import { _ } from 'meteor/underscore';
 
 import Loading from '../loading/Loading';
+import CategoryValuesContainer from '../../containers/CategoryValuesContainer';
 
 const renderRows = (categories) => {
   const content = [];
@@ -13,7 +14,7 @@ const renderRows = (categories) => {
           {category.name}
         </Td>
         <Td column="Values">
-          TODO
+          <CategoryValuesContainer categoryId={category._id} />
         </Td>
         <Td column="Action">
           TODO
