@@ -14,7 +14,8 @@ import { createCategory } from '../../../api/categories/methods';
 const NewCategoryModal = ({ showModal, closeModal }) => {
   let categoryInput;
 
-  const saveCategory = () => {
+  const saveCategory = (event) => {
+    event.preventDefault();
     const categoryName = categoryInput.value;
     if (categoryName) {
       createCategory.call({ name: categoryName });
@@ -32,8 +33,8 @@ const NewCategoryModal = ({ showModal, closeModal }) => {
           Create a New Category
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <form>
+      <form onSubmit={saveCategory}>
+        <Modal.Body>
           <FormGroup
             controlId="newDirectoryForm"
           >
@@ -44,18 +45,18 @@ const NewCategoryModal = ({ showModal, closeModal }) => {
             />
             <FormControl.Feedback />
           </FormGroup>
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn-fill" onClick={closeModal}>Cancel</Button>
-        <Button
-          bsStyle="info"
-          className="btn-fill"
-          onClick={saveCategory}
-        >
-          Create
-        </Button>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-fill" onClick={closeModal}>Cancel</Button>
+          <Button
+            type="submit"
+            bsStyle="info"
+            className="btn-fill"
+          >
+            Create
+          </Button>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };

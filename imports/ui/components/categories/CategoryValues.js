@@ -9,7 +9,8 @@ import NewCategoryValueForm from './NewCategoryValueForm';
 const Styles = StyleSheet.create({
   ul: {
     listStyle: 'none',
-    paddingLeft: 0,
+    border: '1px solid #ddd',
+    padding: 10,
   },
 });
 
