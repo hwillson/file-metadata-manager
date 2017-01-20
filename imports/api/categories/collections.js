@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 
 import { CategorySchema, CategoryValueSchema } from './schemas';
 
-const CategoriesCollection = new Mongo.Collection('categories');
+const CategoriesCollection = new Mongo.Collection('lkup_categories');
 CategoriesCollection.attachSchema(CategorySchema);
 CategoriesCollection.deny({
   insert() { return true; },
@@ -10,7 +10,7 @@ CategoriesCollection.deny({
   remove() { return true; },
 });
 
-const CategoryValuesCollection = new Mongo.Collection('category_values');
+const CategoryValuesCollection = new Mongo.Collection('lkup_category_values');
 CategoryValuesCollection.attachSchema(CategoryValueSchema);
 CategoryValuesCollection.deny({
   insert() { return true; },

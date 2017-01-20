@@ -10,6 +10,12 @@ const UtilityStyles = StyleSheet.create({
   marginTop20: {
     marginTop: 20,
   },
+  marginTopBottom20: {
+    margin: '20px 0',
+  },
+  noPadding: {
+    padding: 0,
+  },
   paddingTopBottom15: {
     paddingTop: 15,
     paddingBottom: 15,

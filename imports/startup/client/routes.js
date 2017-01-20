@@ -6,6 +6,7 @@ import WelcomePage from '../../ui/pages/WelcomePage';
 import FilesPage from '../../ui/pages/FilesPage';
 import CategoriesContainer from '../../ui/containers/CategoriesContainer';
 import LoginContainer from '../../ui/containers/LoginContainer';
+import FieldsContainer from '../../ui/containers/FieldsContainer';
 import Logout from '../../ui/components/logout/Logout';
 
 const renderRoutes = () => (
@@ -17,6 +18,7 @@ const renderRoutes = () => (
       <Route path="welcome" component={WelcomePage} title="Welcome" />
       <Route path="files" component={FilesPage} title="Files" />
       <Route path="categories" component={CategoriesContainer} title="Categories" />
+      <Route path="fields" component={FieldsContainer} title="Fields" />
     </Route>
   </Router>
 );
