@@ -6,7 +6,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-import createField from '../../../api/fields/methods';
+import { createField } from '../../../api/fields/methods';
 
 class NewFieldForm extends Component {
   constructor(props) {

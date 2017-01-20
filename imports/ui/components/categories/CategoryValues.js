@@ -6,13 +6,7 @@ import Loading from '../loading/Loading';
 import CategoryValue from './CategoryValue';
 import NewCategoryValueForm from './NewCategoryValueForm';
 
-const Styles = StyleSheet.create({
-  ul: {
-    listStyle: 'none',
-    border: '1px solid #ddd',
-    padding: 10,
-  },
-});
+let styles;
 
 const CategoryValues = ({ categoryValuesReady, categoryValues, categoryId }) => {
   let content;
@@ -22,7 +16,7 @@ const CategoryValues = ({ categoryValuesReady, categoryValues, categoryId }) => 
     content = <p>No values found.</p>;
   } else {
     content = (
-      <ul className={css(Styles.ul)}>
+      <ul className={css(styles.ul)}>
         {categoryValues.map(categoryValue => (
           <CategoryValue
             key={categoryValue._id}
@@ -52,5 +46,13 @@ CategoryValues.defaultProps = {
   categoryValuesReady: false,
   categoryValues: [],
 };
+
+styles = StyleSheet.create({
+  ul: {
+    listStyle: 'none',
+    border: '1px solid #ddd',
+    padding: 10,
+  },
+});
 
 export default CategoryValues;

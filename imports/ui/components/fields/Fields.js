@@ -6,6 +6,8 @@ import Loading from '../loading/Loading';
 import Field from './Field';
 import UtilityStyles from '../../styles/utility';
 
+let styles;
+
 const Fields = ({ fieldsReady, fields }) => {
   let content;
   if (!fieldsReady) {
@@ -16,7 +18,7 @@ const Fields = ({ fieldsReady, fields }) => {
     );
   } else {
     content = (
-      <ul className={css(UtilityStyles.noPadding, UtilityStyles.marginTopBottom20)}>
+      <ul className={css(styles.ul)}>
         {fields.map(field => <Field key={field._id} field={field} />)}
       </ul>
     );
@@ -33,5 +35,14 @@ Fields.propTypes = {
   fieldsReady: React.PropTypes.bool.isRequired,
   fields: React.PropTypes.array.isRequired,
 };
+
+styles = StyleSheet.create({
+  ul: {
+    listStyle: 'none',
+    border: '1px solid #ddd',
+    padding: 0,
+    margin: '20px 0',
+  },
+});
 
 export default Fields;

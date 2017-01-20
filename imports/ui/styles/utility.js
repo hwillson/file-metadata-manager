@@ -13,12 +13,17 @@ const UtilityStyles = StyleSheet.create({
   marginTopBottom20: {
     margin: '20px 0',
   },
+
   noPadding: {
     padding: 0,
   },
   paddingTopBottom15: {
     paddingTop: 15,
     paddingBottom: 15,
+  },
+
+  listStyleNone: {
+    listStyle: 'none',
   },
 });
 
