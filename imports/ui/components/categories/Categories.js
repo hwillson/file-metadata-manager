@@ -1,17 +1,10 @@
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { _ } from 'meteor/underscore';
-import { css, StyleSheet } from 'aphrodite';
 
 import Loading from '../loading/Loading';
 import CategoryValuesContainer from '../../containers/CategoryValuesContainer';
-import CategoryActions from './CategoryActions';
-
-const Styles = StyleSheet.create({
-  actionColumn: {
-    width: '20%',
-  },
-});
+import CategoryName from './CategoryName';
 
 const renderRows = (categories) => {
   const content = [];
@@ -19,13 +12,13 @@ const renderRows = (categories) => {
     content.push((
       <Tr key={category._id}>
         <Td column="Category">
-          {category.name}
+          <CategoryName
+            categoryId={category._id}
+            categoryName={category.name}
+          />
         </Td>
         <Td column="Values">
           <CategoryValuesContainer categoryId={category._id} />
-        </Td>
-        <Td column="Category Action" className={css(Styles.actionColumn)}>
-          <CategoryActions categoryId={category._id} />
         </Td>
       </Tr>
     ));

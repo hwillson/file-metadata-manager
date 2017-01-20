@@ -26,6 +26,17 @@ const removeCategory = new ValidatedMethod({
   },
 });
 
+const renameCategory = new ValidatedMethod({
+  name: 'categories.renameCategory',
+  validate: new SimpleSchema({
+    id: { type: String },
+    newName: { type: String },
+  }).validator(),
+  run({ id, newName }) {
+    CategoriesCollection.update({ _id: id }, { $set: { name: newName } });
+  },
+});
+
 const createCategoryValue = new ValidatedMethod({
   name: 'categoryValues.createCategoryValue',
   validate: CategoryValueSchema.validator(),
@@ -47,6 +58,7 @@ const removeCategoryValue = new ValidatedMethod({
 export {
   createCategory,
   removeCategory,
+  renameCategory,
   createCategoryValue,
   removeCategoryValue,
 };
