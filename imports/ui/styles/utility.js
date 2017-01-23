@@ -1,6 +1,9 @@
 import { StyleSheet } from 'aphrodite';
 
 const UtilityStyles = StyleSheet.create({
+  marginRight5: {
+    marginRight: 5,
+  },
   marginRight10: {
     marginRight: 10,
   },

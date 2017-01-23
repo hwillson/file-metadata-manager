@@ -3397,3 +3397,43 @@ body > .navbar-collapse[data-color="purple"]:after {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+.accounts-ui {
+  text-align: center;
+  font-size: 16px;
+  max-width: 350px;
+  margin: 40px auto;
+  border: 1px solid #ccc;
+  padding: 30px 20px;
+  border-radius: 5px;
+}
+
+.accounts-ui label {
+  width: 82px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.accounts-ui .field {
+  margin-bottom: 15px;
+}
+
+.accounts-ui .buttons a {
+  display: none;
+}
+
+.accounts-ui button {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.accounts-ui .message {
+  display: block;
+  color: red;
+  margin: 10px 0;
+}
+
+.accounts-ui input {
+  padding: 5px;
+  border: 1px solid #CCC;
+}
