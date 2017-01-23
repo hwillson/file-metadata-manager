@@ -24,6 +24,12 @@ const Sidebar = () => (
           </Link>
         </li>
         <li>
+          <Link to="/videos" activeClassName="active">
+            <i className="pe-7s-video" />
+            <p>Videos</p>
+          </Link>
+        </li>
+        <li>
           <Link to="/fields" activeClassName="active">
             <i className="pe-7s-ticket" />
             <p>Fields</p>

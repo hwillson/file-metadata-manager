@@ -8,6 +8,7 @@ import CategoriesContainer from '../../ui/containers/CategoriesContainer';
 import LoginContainer from '../../ui/containers/LoginContainer';
 import FieldsContainer from '../../ui/containers/FieldsContainer';
 import Logout from '../../ui/components/logout/Logout';
+import VideosContainer from '../../ui/containers/VideosContainer';
 
 const renderRoutes = () => (
   <Router history={browserHistory}>
@@ -17,6 +18,7 @@ const renderRoutes = () => (
     <Route component={AppContainer}>
       <Route path="welcome" component={WelcomePage} title="Welcome" />
       <Route path="files" component={FilesContainer} title="Files" />
+      <Route path="videos" component={VideosContainer} title="Videos" />
       <Route path="categories" component={CategoriesContainer} title="Categories" />
       <Route path="fields" component={FieldsContainer} title="Fields" />
     </Route>
