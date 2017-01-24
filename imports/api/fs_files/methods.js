@@ -7,7 +7,7 @@ if (Meteor.isServer) {
 }
 
 const currentDirectoryListing = new ValidatedMethod({
-  name: 'files.currentDirectoryListing',
+  name: 'fsFiles.currentDirectoryListing',
   validate: null,
   async run({ currentDirectory }) {
     let directoryListing = [];

@@ -8,7 +8,7 @@ import NewDirectoryModal from './NewDirectoryModal';
 import FileMetadataModal from './FileMetadataModal';
 import FileLink from './FileLink';
 import DirectoryLink from './DirectoryLink';
-import currentDirectoryListing from '../../../api/files/methods';
+import currentDirectoryListing from '../../../api/fs_files/methods';
 import UtilityStyles from '../../styles/utility';
 
 class Files extends Component {
@@ -16,9 +16,10 @@ class Files extends Component {
     super(props);
     this.state = {
       currentDirectory: '',
-      files: [],
+      fsFiles: [],
       showNewDirectoryModal: false,
       showFileMetataModal: false,
+      selectedFsFile: null,
     };
     this.setCurrentDirectory = this.setCurrentDirectory.bind(this);
     this.openNewDirectoryModal = this.openNewDirectoryModal.bind(this);
@@ -50,9 +51,9 @@ class Files extends Component {
   showDirectory() {
     currentDirectoryListing.call({
       currentDirectory: decodeURIComponent(this.state.currentDirectory),
-    }, (error, files) => {
-      if (files) {
-        this.setState({ files });
+    }, (error, fsFiles) => {
+      if (fsFiles) {
+        this.setState({ fsFiles });
       }
     });
   }
@@ -61,9 +62,12 @@ class Files extends Component {
     this.setState({ showNewDirectoryModal: true });
   }
 
-  openFileMetadataModal(event) {
+  openFileMetadataModal(event, selectedFsFile) {
     event.preventDefault();
-    this.setState({ showFileMetataModal: true });
+    this.setState({
+      showFileMetataModal: true,
+      selectedFsFile,
+    });
   }
 
   closeNewDirectoryModal() {
@@ -71,19 +75,22 @@ class Files extends Component {
   }
 
   closeFileMetadataModal() {
-    this.setState({ showFileMetataModal: false });
+    this.setState({
+      showFileMetataModal: false,
+      selectedFsFile: null,
+    });
   }
 
   renderRows() {
     const content = [];
     const currentDirectory = this.state.currentDirectory;
-    this.state.files.forEach((file) => {
+    this.state.fsFiles.forEach((fsFile) => {
       let link;
-      if (file.type === 'directory') {
+      if (fsFile.type === 'directory') {
         link = (
           <DirectoryLink
-            key={file.name}
-            file={file}
+            key={fsFile.name}
+            fsFile={fsFile}
             currentDirectory={currentDirectory}
             setCurrentDirectory={this.setCurrentDirectory}
           />
@@ -91,18 +98,18 @@ class Files extends Component {
       } else {
         link = (
           <FileLink
-            key={file.name}
-            file={file}
+            key={fsFile.name}
+            file={fsFile}
             openFileMetadataModal={this.openFileMetadataModal}
           />
         );
       }
       content.push(
-        <Tr key={file.name}>
+        <Tr key={fsFile.name}>
           <Td column="Name">
             {link}
           </Td>
-          <Td column="Last Modified" data={file.lastModifiedTimestamp} />
+          <Td column="Last Modified" data={fsFile.lastModifiedTimestamp} />
           <Td column="Action">
             TODO
           </Td>
@@ -153,9 +160,11 @@ class Files extends Component {
         <FileMetadataModal
           showModal={this.state.showFileMetataModal}
           closeModal={this.closeFileMetadataModal}
+          fsFile={this.state.selectedFsFile}
           fields={this.props.fields}
           categories={this.props.categories}
           categoryValues={this.props.categoryValues}
+          metadataSchema={this.props.metadataSchema}
         />
       </div>
     );
@@ -166,6 +175,7 @@ Files.propTypes = {
   fields: React.PropTypes.array.isRequired,
   categories: React.PropTypes.array.isRequired,
   categoryValues: React.PropTypes.array.isRequired,
+  metadataSchema: React.PropTypes.object.isRequired,
 };
 
 export default Files;
