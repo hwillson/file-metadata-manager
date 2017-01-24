@@ -2,8 +2,8 @@
 
 import { Meteor } from 'meteor/meteor';
 
-import VideosCollection from '../collection';
+import videosCollection from '../collection';
 
 Meteor.publish('videos.all', function videosAll() {
-  return VideosCollection.find();
+  return videosCollection.find();
 });

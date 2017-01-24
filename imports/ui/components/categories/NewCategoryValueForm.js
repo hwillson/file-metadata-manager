@@ -6,7 +6,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-import { createCategoryValue } from '../../../api/categories/methods';
+import { addCategoryValue } from '../../../api/categories/methods';
 
 class NewCategoryValueForm extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class NewCategoryValueForm extends Component {
       categoryValue: '',
     };
     this.setCategoryValue = this.setCategoryValue.bind(this);
-    this.addValue = this.addValue.bind(this);
+    this.callAddCategoryValue = this.callAddCategoryValue.bind(this);
   }
 
   setCategoryValue(event) {
@@ -24,11 +24,11 @@ class NewCategoryValueForm extends Component {
     });
   }
 
-  addValue(event) {
+  callAddCategoryValue(event) {
     event.preventDefault();
     const categoryValue = this.state.categoryValue;
     if (categoryValue) {
-      createCategoryValue.call({
+      addCategoryValue.call({
         categoryId: this.props.categoryId,
         value: categoryValue,
       }, (error) => {
@@ -43,7 +43,11 @@ class NewCategoryValueForm extends Component {
 
   render() {
     return (
-      <Form inline key={this.props.categoryId} onSubmit={this.addValue}>
+      <Form
+        inline
+        key={this.props.categoryId}
+        onSubmit={this.callAddCategoryValue}
+      >
         <FormGroup controlId={`newCategoryValueForm_${this.props.categoryId}`}>
           <FormControl
             type="text"

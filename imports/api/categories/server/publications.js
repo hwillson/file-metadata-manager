@@ -2,15 +2,8 @@
 
 import { Meteor } from 'meteor/meteor';
 
-import {
-  CategoriesCollection,
-  CategoryValuesCollection,
-} from '../collections';
+import categoriesCollection from '../collection';
 
 Meteor.publish('categories.all', function categoriesAll() {
-  return CategoriesCollection.find();
-});
-
-Meteor.publish('categoryValues.all', function categoryValuesAll() {
-  return CategoryValuesCollection.find();
+  return categoriesCollection.find();
 });

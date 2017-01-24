@@ -2,27 +2,20 @@ import React from 'react';
 import { _ } from 'meteor/underscore';
 import { css, StyleSheet } from 'aphrodite';
 
-import Loading from '../loading/Loading';
 import CategoryValue from './CategoryValue';
 import NewCategoryValueForm from './NewCategoryValueForm';
 
 let styles;
 
-const CategoryValues = ({ categoryValuesReady, categoryValues, categoryId }) => {
+const CategoryValues = ({ categoryId, values }) => {
   let content;
-  if (!categoryValuesReady) {
-    content = <Loading />;
-  } else if (categoryValuesReady && _.isEmpty(categoryValues)) {
+  if (_.isEmpty(values)) {
     content = <p>No values found.</p>;
   } else {
     content = (
       <ul className={css(styles.ul)}>
-        {categoryValues.map(categoryValue => (
-          <CategoryValue
-            key={categoryValue._id}
-            id={categoryValue._id}
-            value={categoryValue.value}
-          />
+        {values.map(value => (
+          <CategoryValue key={value} categoryId={categoryId} value={value} />
         ))}
       </ul>
     );
@@ -37,14 +30,12 @@ const CategoryValues = ({ categoryValuesReady, categoryValues, categoryId }) => 
 };
 
 CategoryValues.propTypes = {
-  categoryValuesReady: React.PropTypes.bool.isRequired,
-  categoryValues: React.PropTypes.array.isRequired,
   categoryId: React.PropTypes.string.isRequired,
+  values: React.PropTypes.array,
 };
 
 CategoryValues.defaultProps = {
-  categoryValuesReady: false,
-  categoryValues: [],
+  values: [],
 };
 
 styles = StyleSheet.create({

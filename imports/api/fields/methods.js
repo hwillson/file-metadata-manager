@@ -1,35 +1,41 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import camelCase from 'camelcase';
 
-import FieldsCollection from './collection';
-import FieldSchema from './schema';
+import fieldsCollection from './collection';
 
 const createField = new ValidatedMethod({
-  name: 'fields.createField',
-  validate: FieldSchema.validator(),
+  name: 'fields.create',
+  validate: new SimpleSchema({
+    name: { type: String },
+  }).validator(),
   run({ name }) {
-    return FieldsCollection.insert({ name });
+    const schemaId = camelCase(name.replace(/\W/g, ''));
+    return fieldsCollection.insert({ name, schemaId });
   },
 });
 
 const removeField = new ValidatedMethod({
-  name: 'fields.removeField',
+  name: 'fields.remove',
   validate: new SimpleSchema({
-    id: { type: String },
+    fieldId: { type: String },
   }).validator(),
-  run({ id }) {
-    FieldsCollection.remove({ _id: id });
+  run({ fieldId }) {
+    fieldsCollection.remove({ _id: fieldId });
   },
 });
 
 const renameField = new ValidatedMethod({
-  name: 'fields.renameField',
+  name: 'fields.rename',
   validate: new SimpleSchema({
-    id: { type: String },
-    name: { type: String },
+    fieldId: { type: String },
+    newName: { type: String },
   }).validator(),
-  run({ id, name }) {
-    FieldsCollection.update({ _id: id }, { $set: { name } });
+  run({ fieldId, newName }) {
+    const newSchemaId = camelCase(newName.replace(/\W/g, ''));
+    fieldsCollection.update({
+      _id: fieldId,
+    }, { $set: { name: newName, schemaId: newSchemaId } });
   },
 });
 

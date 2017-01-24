@@ -2,39 +2,28 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { css } from 'aphrodite';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
-import { _ } from 'meteor/underscore';
 
 import UtilityStyles from '../../styles/utility';
-// import { saveFileField } from '../../../api/metadata/methods';
+import saveMetadata from '../../../api/metadata/methods';
 
 const FileMetadataModal = ({
   showModal,
   closeModal,
-  fsFile,
-  fields,
-  categories,
-  categoryValues,
   metadataSchema,
+  metadata,
+  file,
 }) => {
   let formRef;
 
-  const saveMetadata = (data) => {
-
-    // If a file record doesn't exist in the database, create it first
-
-
-    _.keys(data).forEach((key) => {
-      if (key.indexOf('field_') === 0) {
-        const fieldId = key.split('_')[1];
-        const value = data[key];
-
-console.log(fieldId);
-console.log(value);
+  const callSaveMetadata = (newMetadata) => {
+    saveMetadata.call({ uid: file.uid, metadata: newMetadata }, (error) => {
+      if (!error) {
+        closeModal();
       }
     });
   };
 
-  let fileName = (fsFile) ? fsFile.name : '';
+  const fileName = (file) ? file.name : '';
   return (
     <Modal show={showModal} onHide={closeModal} animation={false}>
       <Modal.Header closeButton>
@@ -50,9 +39,10 @@ console.log(value);
           schema={metadataSchema}
           showInlineError
           ref={(ref) => { formRef = ref; }}
-          onSubmit={(data) => { saveMetadata(data); }}
+          onSubmit={(newMetadata) => { callSaveMetadata(newMetadata); }}
           submitField={() => null}
           errorsField={() => null}
+          model={metadata}
         />
       </Modal.Body>
       <Modal.Footer>
@@ -72,16 +62,14 @@ console.log(value);
 FileMetadataModal.propTypes = {
   showModal: React.PropTypes.bool.isRequired,
   closeModal: React.PropTypes.func.isRequired,
-  fsFile: React.PropTypes.object,
-  fields: React.PropTypes.array.isRequired,
-  categories: React.PropTypes.array.isRequired,
-  categoryValues: React.PropTypes.array.isRequired,
   metadataSchema: React.PropTypes.object.isRequired,
+  metadata: React.PropTypes.object.isRequired,
+  file: React.PropTypes.object,
 };
 
 FileMetadataModal.defaultProps = {
   showModal: false,
-  fsFile: null,
+  file: null,
 };
 
 export default FileMetadataModal;

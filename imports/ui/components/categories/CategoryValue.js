@@ -2,9 +2,12 @@ import React from 'react';
 
 import { removeCategoryValue } from '../../../api/categories/methods';
 
-const CategoryValue = ({ id, value }) => (
-  <li className="category-value" key={id}>
-    <a href="#remove" onClick={() => { removeCategoryValue.call({ id }); }}>
+const CategoryValue = ({ categoryId, value }) => (
+  <li className="category-value">
+    <a
+      href="#remove"
+      onClick={() => { removeCategoryValue.call({ categoryId, value }); }}
+    >
       <i className="fa fa-minus-circle" />
     </a>
     {value}
@@ -12,7 +15,7 @@ const CategoryValue = ({ id, value }) => (
 );
 
 CategoryValue.propTypes = {
-  id: React.PropTypes.string.isRequired,
+  categoryId: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
 };
 

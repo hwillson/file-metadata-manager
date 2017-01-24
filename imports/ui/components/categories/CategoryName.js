@@ -61,7 +61,7 @@ class CategoryName extends Component {
   callRenameCategory(event) {
     event.preventDefault();
     renameCategory.call({
-      id: this.props.categoryId,
+      categoryId: this.props.categoryId,
       newName: this.state.newCategoryName,
     }, (error) => {
       if (!error) {
@@ -75,7 +75,7 @@ class CategoryName extends Component {
     if (confirm(
         'Are you sure you want to delete this category? This category and '
         + 'all of its category values will be permanently removed.')) {
-      removeCategory.call({ id: this.props.categoryId });
+      removeCategory.call({ categoryId: this.props.categoryId });
     }
   }
 

@@ -1,40 +1,17 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import { FileFieldsCollection, FileCategoriesCollection } from './collections';
-import { FileFieldSchema, FileCategorySchema } from './schemas';
-
+import metadataCollection from './collection';
 
 const saveMetadata = new ValidatedMethod({
   name: 'metadata.save',
-  validate: null,
-  run({ fileId, metadata }) {
-    if (!fileId) {
-// TODO ...
-    }
-
-
+  validate: new SimpleSchema({
+    uid: { type: String },
+    metadata: { type: Object, blackbox: true },
+  }).validator(),
+  run({ uid, metadata }) {
+    metadataCollection.update({ uid }, { $set: metadata }, { upsert: true });
   },
 });
 
 export default saveMetadata;
-
-// const saveFileField = new ValidatedMethod({
-//   name: 'fileFields.save',
-//   validate: FileFieldSchema.validator(),
-//   run({ fileFieldId, fileId, fieldId, value }) {
-//     FileFieldsCollection.update({
-//       _id: fileFieldId,
-//     }, {
-//       $set: {
-//         fileId,
-//         fieldId,
-//         value,
-//       },
-//     }, {
-//       upsert: true,
-//     });
-//   },
-// });
-
-// export { saveFileField };

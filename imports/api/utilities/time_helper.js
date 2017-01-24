@@ -1,9 +1,9 @@
 import moment from 'moment';
 
-const TimeHelper = {
+const timeHelper = {
   currentYear() {
     return moment().format('YYYY');
   },
 };
 
-export default TimeHelper;
+export default timeHelper;

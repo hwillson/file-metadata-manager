@@ -58,8 +58,8 @@ class Field extends Component {
   callRenameField(event) {
     event.preventDefault();
     renameField.call({
-      id: this.props.field._id,
-      name: this.state.newFieldName,
+      fieldId: this.props.field._id,
+      newName: this.state.newFieldName,
     }, (error) => {
       if (!error) {
         this.exitEditMode();
@@ -71,9 +71,9 @@ class Field extends Component {
     event.preventDefault();
     if (confirm(
         'Are you sure you want to delete this field? It will be removed from '
-        + 'all files it has been associated with, along with all field '
+        + 'all files/videos it has been associated with, along with all field '
         + 'values.')) {
-      removeField.call({ id: this.props.field._id });
+      removeField.call({ fieldId: this.props.field._id });
     }
   }
 

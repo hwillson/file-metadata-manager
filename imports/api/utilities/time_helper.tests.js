@@ -3,11 +3,11 @@
 
 import { expect } from 'meteor/practicalmeteor:chai';
 
-import TimeHelper from './time_helper';
+import timeHelper from './time_helper';
 
-describe('api.utilities.TimeHelper', function () {
+describe('api.utilities.timeHelper', function () {
   it('should return current year', function () {
-    const year = TimeHelper.currentYear();
+    const year = timeHelper.currentYear();
     expect(year).to.not.be.empty;
     expect(year.length).to.equal(4);
     expect(year.substring(0, 3)).to.equal('201');

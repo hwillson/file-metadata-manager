@@ -1,12 +1,16 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const fieldSchema = new SimpleSchema({
+const categorySchema = new SimpleSchema({
   name: {
     type: String,
   },
   schemaId: {
     type: String,
   },
+  values: {
+    type: [String],
+    optional: true,
+  },
 });
 
-export default fieldSchema;
+export default categorySchema;

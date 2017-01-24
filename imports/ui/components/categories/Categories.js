@@ -3,8 +3,8 @@ import { Table, Tr, Td } from 'reactable';
 import { _ } from 'meteor/underscore';
 
 import Loading from '../loading/Loading';
-import CategoryValuesContainer from '../../containers/CategoryValuesContainer';
 import CategoryName from './CategoryName';
+import CategoryValues from './CategoryValues';
 
 const renderRows = (categories) => {
   const content = [];
@@ -18,7 +18,7 @@ const renderRows = (categories) => {
           />
         </Td>
         <Td column="Values">
-          <CategoryValuesContainer categoryId={category._id} />
+          <CategoryValues categoryId={category._id} values={category.values} />
         </Td>
       </Tr>
     ));
@@ -50,11 +50,6 @@ const Categories = ({ categoriesReady, categories }) => {
 Categories.propTypes = {
   categoriesReady: React.PropTypes.bool.isRequired,
   categories: React.PropTypes.array.isRequired,
-};
-
-Categories.defaultProps = {
-  categoriesReady: false,
-  categories: [],
 };
 
 export default Categories;

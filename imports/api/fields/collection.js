@@ -1,13 +1,13 @@
 import { Mongo } from 'meteor/mongo';
 
-import FieldSchema from './schema';
+import fieldSchema from './schema';
 
-const FieldsCollection = new Mongo.Collection('lkup_fields');
-FieldsCollection.attachSchema(FieldSchema);
-FieldsCollection.deny({
+const fieldsCollection = new Mongo.Collection('fields');
+fieldsCollection.attachSchema(fieldSchema);
+fieldsCollection.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
 });
 
-export default FieldsCollection;
+export default fieldsCollection;

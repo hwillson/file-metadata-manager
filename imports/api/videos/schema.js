@@ -1,9 +1,9 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const VideoSchema = new SimpleSchema({
-  todo: {
+const videoSchema = new SimpleSchema({
+  uid: {
     type: String,
   },
 });
 
-export default VideoSchema;
+export default videoSchema;

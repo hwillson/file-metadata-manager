@@ -8,7 +8,7 @@ import NewDirectoryModal from './NewDirectoryModal';
 import FileMetadataModal from './FileMetadataModal';
 import FileLink from './FileLink';
 import DirectoryLink from './DirectoryLink';
-import currentDirectoryListing from '../../../api/fs_files/methods';
+import currentDirectoryListing from '../../../api/files/methods';
 import UtilityStyles from '../../styles/utility';
 
 class Files extends Component {
@@ -16,10 +16,10 @@ class Files extends Component {
     super(props);
     this.state = {
       currentDirectory: '',
-      fsFiles: [],
+      files: [],
       showNewDirectoryModal: false,
-      showFileMetataModal: false,
-      selectedFsFile: null,
+      showFileMetadataModal: false,
+      selectedFile: null,
     };
     this.setCurrentDirectory = this.setCurrentDirectory.bind(this);
     this.openNewDirectoryModal = this.openNewDirectoryModal.bind(this);
@@ -51,9 +51,9 @@ class Files extends Component {
   showDirectory() {
     currentDirectoryListing.call({
       currentDirectory: decodeURIComponent(this.state.currentDirectory),
-    }, (error, fsFiles) => {
-      if (fsFiles) {
-        this.setState({ fsFiles });
+    }, (error, files) => {
+      if (files) {
+        this.setState({ files });
       }
     });
   }
@@ -62,11 +62,12 @@ class Files extends Component {
     this.setState({ showNewDirectoryModal: true });
   }
 
-  openFileMetadataModal(event, selectedFsFile) {
+  openFileMetadataModal(event, selectedFile) {
     event.preventDefault();
+    this.props.selectedUid.set(selectedFile.uid);
     this.setState({
-      showFileMetataModal: true,
-      selectedFsFile,
+      showFileMetadataModal: true,
+      selectedFile,
     });
   }
 
@@ -75,22 +76,23 @@ class Files extends Component {
   }
 
   closeFileMetadataModal() {
+    this.props.selectedUid.set(null);
     this.setState({
-      showFileMetataModal: false,
-      selectedFsFile: null,
+      showFileMetadataModal: false,
+      selectedFile: null,
     });
   }
 
   renderRows() {
     const content = [];
     const currentDirectory = this.state.currentDirectory;
-    this.state.fsFiles.forEach((fsFile) => {
+    this.state.files.forEach((file) => {
       let link;
-      if (fsFile.type === 'directory') {
+      if (file.type === 'directory') {
         link = (
           <DirectoryLink
-            key={fsFile.name}
-            fsFile={fsFile}
+            key={file.name}
+            file={file}
             currentDirectory={currentDirectory}
             setCurrentDirectory={this.setCurrentDirectory}
           />
@@ -98,18 +100,18 @@ class Files extends Component {
       } else {
         link = (
           <FileLink
-            key={fsFile.name}
-            file={fsFile}
+            key={file.name}
+            file={file}
             openFileMetadataModal={this.openFileMetadataModal}
           />
         );
       }
       content.push(
-        <Tr key={fsFile.name}>
+        <Tr key={file.name}>
           <Td column="Name">
             {link}
           </Td>
-          <Td column="Last Modified" data={fsFile.lastModifiedTimestamp} />
+          <Td column="Last Modified" data={file.lastModifiedTimestamp} />
           <Td column="Action">
             TODO
           </Td>
@@ -158,13 +160,11 @@ class Files extends Component {
           currentPath={this.state.currentDirectory}
         />
         <FileMetadataModal
-          showModal={this.state.showFileMetataModal}
+          showModal={this.state.showFileMetadataModal}
           closeModal={this.closeFileMetadataModal}
-          fsFile={this.state.selectedFsFile}
-          fields={this.props.fields}
-          categories={this.props.categories}
-          categoryValues={this.props.categoryValues}
           metadataSchema={this.props.metadataSchema}
+          metadata={this.props.metadata}
+          file={this.state.selectedFile}
         />
       </div>
     );
@@ -172,10 +172,9 @@ class Files extends Component {
 }
 
 Files.propTypes = {
-  fields: React.PropTypes.array.isRequired,
-  categories: React.PropTypes.array.isRequired,
-  categoryValues: React.PropTypes.array.isRequired,
   metadataSchema: React.PropTypes.object.isRequired,
+  metadata: React.PropTypes.object.isRequired,
+  selectedUid: React.PropTypes.object.isRequired,
 };
 
 export default Files;
