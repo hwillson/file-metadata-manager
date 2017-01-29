@@ -13,6 +13,14 @@
     },
     "files": {
       "rootDirectory": "/nas/files"
+    },
+    "videos": {
+      "youtube": {
+        "api": {
+          "url": "https://www.googleapis.com/youtube/v3/videos",
+          "key": "some youtube key"
+        }
+      }
     }
   }
 }

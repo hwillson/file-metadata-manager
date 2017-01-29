@@ -4,9 +4,9 @@ import { Router, Route, browserHistory, Redirect } from 'react-router';
 import AppContainer from '../../ui/containers/AppContainer';
 import WelcomePage from '../../ui/pages/WelcomePage';
 import FilesContainer from '../../ui/containers/FilesContainer';
-import CategoriesContainer from '../../ui/containers/CategoriesContainer';
+import CategoriesPage from '../../ui/pages/CategoriesPage';
 import LoginContainer from '../../ui/containers/LoginContainer';
-import FieldsContainer from '../../ui/containers/FieldsContainer';
+import FieldsPage from '../../ui/pages/FieldsPage';
 import Logout from '../../ui/components/logout/Logout';
 import VideosContainer from '../../ui/containers/VideosContainer';
 
@@ -19,8 +19,8 @@ const renderRoutes = () => (
       <Route path="welcome" component={WelcomePage} title="Welcome" />
       <Route path="files" component={FilesContainer} title="Files" />
       <Route path="videos" component={VideosContainer} title="Videos" />
-      <Route path="categories" component={CategoriesContainer} title="Categories" />
-      <Route path="fields" component={FieldsContainer} title="Fields" />
+      <Route path="categories" component={CategoriesPage} title="Categories" />
+      <Route path="fields" component={FieldsPage} title="Fields" />
     </Route>
   </Router>
 );

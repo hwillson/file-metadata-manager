@@ -27,4 +27,9 @@ FieldsPage.propTypes = {
   fields: React.PropTypes.array.isRequired,
 };
 
+FieldsPage.defaultProps = {
+  fieldsReady: false,
+  fields: [],
+};
+
 export default FieldsPage;

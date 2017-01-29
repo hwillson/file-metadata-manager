@@ -30,7 +30,16 @@ class AppLayout extends Component {
                 <div
                   className={`container-fluid card ${css(UtilityStyles.paddingTopBottom15)}`}
                 >
-                  {this.props.children}
+                  {React.cloneElement(
+                    this.props.children,
+                    {
+                      fieldsReady: this.props.fieldsReady,
+                      fields: this.props.fields,
+                      categoriesReady: this.props.categoriesReady,
+                      categories: this.props.categories,
+                      metadataSchema: this.props.metadataSchema,
+                    },
+                  )}
                 </div>
               </div>
               <Footer />
@@ -45,6 +54,11 @@ class AppLayout extends Component {
 
 AppLayout.propTypes = {
   usersReady: React.PropTypes.bool,
+  fieldsReady: React.PropTypes.bool.isRequired,
+  fields: React.PropTypes.array.isRequired,
+  categoriesReady: React.PropTypes.bool.isRequired,
+  categories: React.PropTypes.array.isRequired,
+  metadataSchema: React.PropTypes.object.isRequired,
   children: React.PropTypes.element.isRequired,
 };
 

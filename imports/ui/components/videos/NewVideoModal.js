@@ -1,32 +1,92 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Modal, Button, Alert } from 'react-bootstrap';
 import { css } from 'aphrodite';
+import AutoForm from 'uniforms-bootstrap3/AutoForm';
 
+import { videoIdSchema } from '../../../api/videos/schemas';
+import { createVideoRecord } from '../../../api/videos/methods';
 import UtilityStyles from '../../styles/utility';
 
-const NewVideoModal = ({ showModal, closeModal }) => (
-  <Modal show={showModal} onHide={closeModal} animation={false}>
-    <Modal.Header closeButton>
-      <Modal.Title>
-        <span className={css(UtilityStyles.marginRight10)}>
-          <i className="fa fa-file-video-o" />
-        </span>
-        New Video
-      </Modal.Title>
-    </Modal.Header>
-    <form>
-      <Modal.Body>
-        TODO
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn-fill" onClick={closeModal}>Cancel</Button>
-        <Button type="submit" bsStyle="info" className="btn-fill">
-          Save
-        </Button>
-      </Modal.Footer>
-    </form>
-  </Modal>
-);
+class NewVideoModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      videoError: null,
+    };
+    this.closeModal = this.closeModal.bind(this);
+    this.formRef = null;
+  }
+
+  closeModal() {
+    this.setState({
+      videoError: null,
+    });
+    this.props.closeModal();
+  }
+
+  callCreateVideoRecord(videoData) {
+    createVideoRecord.call({ uid: videoData.uid }, (error) => {
+      if (error) {
+        this.setState({
+          videoError: error.error,
+        });
+      } else {
+        this.closeModal();
+      }
+    });
+  }
+
+  showVideoErrors() {
+    return this.state.videoError
+      ? <Alert bsStyle="danger">{this.state.videoError}</Alert> : null;
+  }
+
+  render() {
+    return (
+      <Modal
+        show={this.props.showModal}
+        onHide={this.closeModal}
+        animation={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <span className={css(UtilityStyles.marginRight10)}>
+              <i className="fa fa-youtube" />
+            </span>
+            New Video
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.showVideoErrors()}
+          <AutoForm
+            schema={videoIdSchema}
+            showInlineError
+            ref={(ref) => { this.formRef = ref; }}
+            onSubmit={(videoData) => { this.callCreateVideoRecord(videoData); }}
+            submitField={() => null}
+            errorsField={() => null}
+          />
+          <p>
+            The video ID can be found in a YouTube video link. For example:
+            https://www.youtube.com/watch?v=<strong>pK-J1pJW1AQ</strong>
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-fill" onClick={this.closeModal}>
+            Cancel
+          </Button>
+          <Button
+            bsStyle="info"
+            className="btn-fill"
+            onClick={() => this.formRef.submit()}
+          >
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+}
 
 NewVideoModal.propTypes = {
   showModal: React.PropTypes.bool.isRequired,

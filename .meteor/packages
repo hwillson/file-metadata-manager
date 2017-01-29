@@ -24,5 +24,6 @@ accounts-password
 react-meteor-data
 aldeed:simple-schema
 aldeed:collection2
-mdg:validated-method
+http
 check
+mdg:validated-method

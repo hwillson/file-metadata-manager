@@ -46,6 +46,7 @@ class VideosPage extends Component {
             <VideosTable
               videosReady={this.props.videosReady}
               videos={this.props.videos}
+              metadataSchema={this.props.metadataSchema}
             />
           </Col>
         </Row>
@@ -62,6 +63,7 @@ class VideosPage extends Component {
 VideosPage.propTypes = {
   videosReady: React.PropTypes.bool.isRequired,
   videos: React.PropTypes.array.isRequired,
+  metadataSchema: React.PropTypes.object.isRequired,
 };
 
 export default VideosPage;
