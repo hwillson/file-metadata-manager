@@ -3,6 +3,7 @@ import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
 import { css } from 'aphrodite';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
 import AutoField from 'uniforms-bootstrap3/AutoField';
+import HiddenField from 'uniforms-bootstrap3/HiddenField';
 import { _ } from 'meteor/underscore';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
@@ -16,6 +17,7 @@ const EditFileModal = ({
   metadataSchema,
   file,
   fsFile,
+  currentDirectory,
 }) => {
   let formRef;
 
@@ -55,8 +57,9 @@ const EditFileModal = ({
           <Tabs id="edit-file-tabs">
             <Tab eventKey={1} title="Overview">
               <div className={css(UtilityStyles.marginTop20)}>
-                <AutoField name="uid" value={fileUid} type="hidden" />
+                <HiddenField name="uid" value={fileUid} />
                 <AutoField name="filename" value={fileName} />
+                <AutoField name="path" value={decodeURI(currentDirectory)} />
                 <AutoField name="title" />
               </div>
             </Tab>
@@ -90,6 +93,7 @@ EditFileModal.propTypes = {
   metadataSchema: React.PropTypes.object.isRequired,
   file: React.PropTypes.object.isRequired,
   fsFile: React.PropTypes.object,
+  currentDirectory: React.PropTypes.string.isRequired,
 };
 
 EditFileModal.defaultProps = {

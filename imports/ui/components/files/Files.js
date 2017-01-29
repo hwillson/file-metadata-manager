@@ -165,6 +165,7 @@ class Files extends Component {
           metadataSchema={this.props.metadataSchema}
           file={this.props.file}
           fsFile={this.state.selectedFsFile}
+          currentDirectory={this.state.currentDirectory}
         />
       </div>
     );

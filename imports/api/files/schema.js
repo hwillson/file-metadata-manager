@@ -10,6 +10,12 @@ const fileSchema = new SimpleSchema({
       disabled: true,
     },
   },
+  path: {
+    type: String,
+    uniforms: {
+      disabled: true,
+    },
+  },
   title: {
     type: String,
     optional: true,
