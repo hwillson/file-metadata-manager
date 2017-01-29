@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
 import { css } from 'aphrodite';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
+import AutoField from 'uniforms-bootstrap3/AutoField';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 
@@ -46,7 +47,26 @@ const EditVideoModal = ({
           submitField={() => null}
           errorsField={() => null}
           model={video}
-        />
+        >
+          <Tabs id="edit-video-tabs">
+            <Tab eventKey={1} title="Content">
+              <div className={css(UtilityStyles.marginTop20)}>
+                <AutoField name="uid" />
+                <AutoField name="publishedDate" />
+                <AutoField name="title" />
+                <AutoField name="description" />
+                <AutoField name="content" />
+              </div>
+            </Tab>
+            <Tab eventKey={2} title="Classification">
+              <div className={css(UtilityStyles.marginTop20)}>
+                {metadataSchema._schemaKeys.map(key =>
+                  <AutoField key={key} name={key} />,
+                )}
+              </div>
+            </Tab>
+          </Tabs>
+        </AutoForm>
       </Modal.Body>
       <Modal.Footer>
         <Button className="btn-fill" onClick={closeModal}>Cancel</Button>

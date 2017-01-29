@@ -7,6 +7,9 @@ const UtilityStyles = StyleSheet.create({
   marginRight10: {
     marginRight: 10,
   },
+  marginTop10: {
+    marginTop: 10,
+  },
   marginTop15: {
     marginTop: 15,
   },

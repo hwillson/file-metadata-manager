@@ -26,12 +26,11 @@ class NewVideoModal extends Component {
   }
 
   callCreateVideoRecord(videoData) {
-    this.setState({
-      creatingVideo: true,
-    });
+    this.setState({ creatingVideo: true });
     createVideoRecord.call({ uid: videoData.uid }, (error, done) => {
       if (error) {
         this.setState({
+          creatingVideo: false,
           videoError: error.error,
         });
       } else if (done) {

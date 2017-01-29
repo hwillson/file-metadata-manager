@@ -21,10 +21,6 @@ const createVideoRecord = new ValidatedMethod({
           videoData.content = subtitleContent;
           videosCollection.insert(videoData);
           done = true;
-          // youtube.fetchSubtitles(uid).then((subtitleContent) => {
-          //   videoData.content = subtitleContent;
-          //   videosCollection.insert(videoData);
-          // });
         } else {
           throw new Meteor.Error(`YouTube video ID "${uid}" does not exist.`);
         }
