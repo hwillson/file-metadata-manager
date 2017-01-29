@@ -11,6 +11,7 @@ class NewVideoModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      creatingVideo: false,
       videoError: null,
     };
     this.closeModal = this.closeModal.bind(this);
@@ -25,12 +26,18 @@ class NewVideoModal extends Component {
   }
 
   callCreateVideoRecord(videoData) {
-    createVideoRecord.call({ uid: videoData.uid }, (error) => {
+    this.setState({
+      creatingVideo: true,
+    });
+    createVideoRecord.call({ uid: videoData.uid }, (error, done) => {
       if (error) {
         this.setState({
           videoError: error.error,
         });
-      } else {
+      } else if (done) {
+        this.setState({
+          creatingVideo: false,
+        });
         this.closeModal();
       }
     });
@@ -39,6 +46,32 @@ class NewVideoModal extends Component {
   showVideoErrors() {
     return this.state.videoError
       ? <Alert bsStyle="danger">{this.state.videoError}</Alert> : null;
+  }
+
+  saveButton() {
+    let button;
+    if (this.state.creatingVideo) {
+      button = (
+        <Button
+          bsStyle="info"
+          className="btn-fill"
+          disabled
+        >
+          Saving...
+        </Button>
+      );
+    } else {
+      button = (
+        <Button
+          bsStyle="info"
+          className="btn-fill"
+          onClick={() => this.formRef.submit()}
+        >
+          Save
+        </Button>
+      );
+    }
+    return button;
   }
 
   render() {
@@ -75,13 +108,7 @@ class NewVideoModal extends Component {
           <Button className="btn-fill" onClick={this.closeModal}>
             Cancel
           </Button>
-          <Button
-            bsStyle="info"
-            className="btn-fill"
-            onClick={() => this.formRef.submit()}
-          >
-            Save
-          </Button>
+          {this.saveButton()}
         </Modal.Footer>
       </Modal>
     );

@@ -48,7 +48,7 @@ class VideosTable extends Component {
         <Td column="Published Date" data={video.publishedDate} />
         <Td column="Action">
           <Button
-            bsStyle="info"
+            bsStyle="default"
             className="btn-fill"
             onClick={() => {
               window.open(`https://www.youtube.com/watch?v=${video.uid}`);
