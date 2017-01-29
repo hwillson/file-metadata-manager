@@ -3,22 +3,22 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import FilesPage from '../pages/FilesPage';
-import metadataCollection from '../../api/metadata/collection';
+import filesCollection from '../../api/files/collection';
 
 const selectedUid = new ReactiveVar(null);
 
 const FilesContainer = createContainer(({
   metadataSchema,
 }) => {
-  Meteor.subscribe('metadata.all');
-  let metadata;
+  Meteor.subscribe('files.all');
+  let file;
   if (selectedUid.get()) {
-    metadata = metadataCollection.findOne({ uid: selectedUid.get() });
+    file = filesCollection.findOne({ uid: selectedUid.get() });
   }
 
   return {
     metadataSchema,
-    metadata,
+    file,
     selectedUid,
   };
 }, FilesPage);

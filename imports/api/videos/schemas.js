@@ -1,7 +1,6 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import TextField from 'uniforms-bootstrap3/TextField';
 import LongTextField from 'uniforms-bootstrap3/LongTextField';
-// import DateField from 'uniforms-bootstrap3/DateField';
 
 const videoIdSchema = new SimpleSchema({
   uid: {

@@ -3,59 +3,61 @@ import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
 import { css } from 'aphrodite';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
 import AutoField from 'uniforms-bootstrap3/AutoField';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import UtilityStyles from '../../styles/utility';
-import { videoSchema } from '../../../api/videos/schemas';
-import { updateVideo } from '../../../api/videos/methods';
+import saveFile from '../../../api/files/methods';
+import fileSchema from '../../../api/files/schema';
 
-const EditVideoModal = ({
+const EditFileModal = ({
   showModal,
   closeModal,
   metadataSchema,
-  video,
+  file,
+  fsFile,
 }) => {
   let formRef;
-  const combinedVideoSchema = new SimpleSchema([videoSchema, metadataSchema]);
 
-  const callUpdateVideo = (updatedVideo) => {
-    const videoData = _.omit(updatedVideo, ['_id']);
-    updateVideo.call({ videoId: updatedVideo._id, videoData }, (error) => {
-      if (!error) {
-        closeModal();
-      }
-    });
+  const callSaveFile = (fileData) => {
+    if (fileData) {
+      const updatedFile = _.extend({ uid: fsFile.uid }, fileData);
+      saveFile.call({ file: _.omit(updatedFile, '_id') }, (error) => {
+        if (!error) {
+          closeModal();
+        }
+      });
+    }
   };
 
+  const fileUid = (fsFile) ? fsFile.uid : null;
+  const fileName = (fsFile) ? fsFile.name : '';
   return (
     <Modal show={showModal} onHide={closeModal} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>
           <span className={css(UtilityStyles.marginRight10)}>
-            <i className="fa fa-youtube" />
+            <i className="fa fa-file-text-o" />
           </span>
-          Edit Video
+          Edit File
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AutoForm
-          schema={combinedVideoSchema}
+          schema={new SimpleSchema([fileSchema, metadataSchema])}
           showInlineError
           ref={(ref) => { formRef = ref; }}
-          onSubmit={(updatedVideo) => { callUpdateVideo(updatedVideo); }}
+          onSubmit={(fileData) => { callSaveFile(fileData); }}
           submitField={() => null}
           errorsField={() => null}
-          model={video}
+          model={file}
         >
-          <Tabs id="edit-video-tabs">
+          <Tabs id="edit-file-tabs">
             <Tab eventKey={1} title="Overview">
               <div className={css(UtilityStyles.marginTop20)}>
-                <AutoField name="uid" />
-                <AutoField name="publishedDate" />
+                <AutoField name="uid" value={fileUid} type="hidden" />
+                <AutoField name="filename" value={fileName} />
                 <AutoField name="title" />
-                <AutoField name="description" />
-                <AutoField name="content" />
               </div>
             </Tab>
             <Tab eventKey={2} title="Classification">
@@ -82,16 +84,17 @@ const EditVideoModal = ({
   );
 };
 
-EditVideoModal.propTypes = {
+EditFileModal.propTypes = {
   showModal: React.PropTypes.bool.isRequired,
   closeModal: React.PropTypes.func.isRequired,
   metadataSchema: React.PropTypes.object.isRequired,
-  video: React.PropTypes.object,
+  file: React.PropTypes.object.isRequired,
+  fsFile: React.PropTypes.object,
 };
 
-EditVideoModal.defaultProps = {
+EditFileModal.defaultProps = {
   showModal: false,
-  video: null,
+  fsFile: null,
 };
 
-export default EditVideoModal;
+export default EditFileModal;

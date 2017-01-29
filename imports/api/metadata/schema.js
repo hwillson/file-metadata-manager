@@ -15,12 +15,14 @@ const generateMetadataSchema = ({ fields, categories }) => {
 
   if (!_.isEmpty(categories)) {
     categories.forEach((category) => {
-      schemaConfig[category.schemaId] = {
-        type: String,
-        label: category.name,
-        optional: true,
-        allowedValues: category.values,
-      };
+      if (category.values) {
+        schemaConfig[category.schemaId] = {
+          type: String,
+          label: category.name,
+          optional: true,
+          allowedValues: category.values,
+        };
+      }
     });
   }
 

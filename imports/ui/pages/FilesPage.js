@@ -2,11 +2,11 @@ import React from 'react';
 
 import Files from '../components/files/Files';
 
-const FilesPage = ({ metadataSchema, metadata, selectedUid }) => (
+const FilesPage = ({ metadataSchema, file, selectedUid }) => (
   <div className="files-page">
     <Files
       metadataSchema={metadataSchema}
-      metadata={metadata}
+      file={file}
       selectedUid={selectedUid}
     />
   </div>
@@ -14,12 +14,12 @@ const FilesPage = ({ metadataSchema, metadata, selectedUid }) => (
 
 FilesPage.propTypes = {
   metadataSchema: React.PropTypes.object.isRequired,
-  metadata: React.PropTypes.object,
+  file: React.PropTypes.object,
   selectedUid: React.PropTypes.object.isRequired,
 };
 
 FilesPage.defaultProps = {
-  metadata: {},
+  file: {},
 };
 
 export default FilesPage;

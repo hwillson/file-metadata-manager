@@ -3,22 +3,22 @@ import { css } from 'aphrodite';
 
 import UtilityStyles from '../../styles/utility';
 
-const FileLink = ({ file, openFileMetadataModal }) => (
-  <div key={file.name}>
+const FileLink = ({ fsFile, openFileMetadataModal }) => (
+  <div key={fsFile.name}>
     <span className={css(UtilityStyles.marginRight5)}>
       <i className="fa fa-file-text-o" />
     </span>
     <a
       href="#file"
-      onClick={(event) => { openFileMetadataModal(event, file); }}
+      onClick={(event) => { openFileMetadataModal(event, fsFile); }}
     >
-      {file.name}
+      {fsFile.name}
     </a>
   </div>
 );
 
 FileLink.propTypes = {
-  file: React.PropTypes.object.isRequired,
+  fsFile: React.PropTypes.object.isRequired,
   openFileMetadataModal: React.PropTypes.func.isRequired,
 };
 

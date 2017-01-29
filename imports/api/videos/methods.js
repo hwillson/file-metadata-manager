@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'meteor/underscore';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { videoIdSchema } from './schemas';
 import videosCollection from './collection';
@@ -40,4 +41,16 @@ const updateVideo = new ValidatedMethod({
   },
 });
 
-export { createVideoRecord, updateVideo };
+const deleteVideo = new ValidatedMethod({
+  name: 'videos.delete',
+  validate: new SimpleSchema({
+    videoId: { type: String },
+  }).validator(),
+  run({ videoId }) {
+    if (videoId) {
+      videosCollection.remove({ _id: videoId });
+    }
+  },
+});
+
+export { createVideoRecord, updateVideo, deleteVideo };

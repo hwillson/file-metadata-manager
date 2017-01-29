@@ -1,4 +1,4 @@
-/* global window */
+/* global window, confirm */
 
 import React, { Component } from 'react';
 import { _ } from 'meteor/underscore';
@@ -9,6 +9,7 @@ import { css } from 'aphrodite';
 import Loading from '../loading/Loading';
 import UtilityStyles from '../../styles/utility';
 import EditVideoModal from './EditVideoModal';
+import { deleteVideo } from '../../../api/videos/methods';
 
 class VideosTable extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class VideosTable extends Component {
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.callRemoveVideo = this.callRemoveVideo.bind(this);
   }
 
   openModal(event, video) {
@@ -36,6 +38,14 @@ class VideosTable extends Component {
     });
   }
 
+  callRemoveVideo(videoId) {
+    if (confirm(
+        'Are you sure you want to remove this video? All metadata will be '
+        + 'removed (but the original video on YouTube will stay in place).')) {
+      deleteVideo.call({ videoId });
+    }
+  }
+
   renderRows() {
     return this.props.videos.map(video => (
       <Tr key={video.uid}>
@@ -47,16 +57,28 @@ class VideosTable extends Component {
         <Td column="Description" data={video.description} />
         <Td column="Published Date" data={video.publishedDate} />
         <Td column="Action">
-          <Button
-            bsStyle="default"
-            className="btn-fill"
-            onClick={() => {
-              window.open(`https://www.youtube.com/watch?v=${video.uid}`);
-            }}
-          >
-            <i className={`fa fa-external-link ${css(UtilityStyles.marginRight5)}`} />
-            Open Video
-          </Button>
+          <div>
+            <Button
+              bsStyle="default"
+              className={`btn-fill ${css(UtilityStyles.marginRight5)}`}
+              onClick={() => {
+                window.open(`https://www.youtube.com/watch?v=${video.uid}`);
+              }}
+              bsSize="xsmall"
+            >
+              <i className="fa fa-external-link" />
+              Open Video
+            </Button>
+            <Button
+              bsStyle="danger"
+              className="btn-fill"
+              onClick={() => { this.callRemoveVideo(video._id); }}
+              bsSize="xsmall"
+            >
+              <i className="fa fa-minus-circle" />
+              Remove
+            </Button>
+          </div>
         </Td>
       </Tr>
     ));

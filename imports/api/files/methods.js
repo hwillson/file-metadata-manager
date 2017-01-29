@@ -1,25 +1,19 @@
-import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-let fileSystem;
-if (Meteor.isServer) {
-  fileSystem = require('./server/file_system').default;
-}
+import filesCollection from './collection';
 
-const currentDirectoryListing = new ValidatedMethod({
-  name: 'files.currentDirectoryListing',
+const updateFile = new ValidatedMethod({
+  name: 'files.update',
   validate: null,
-  async run({ currentDirectory }) {
-    let directoryListing = [];
-    if (!this.isSimulation) {
-      try {
-        directoryListing = await fileSystem.getFiles(currentDirectory);
-      } catch (error) {
-        throw new Meteor.Error(`Directory "${currentDirectory}" doesn't exist!`);
-      }
-    }
-    return directoryListing;
+  run({ file }) {
+    filesCollection.update({
+      uid: file.uid,
+    }, {
+      $set: file,
+    }, {
+      upsert: true,
+    });
   },
 });
 
-export default currentDirectoryListing;
+export default updateFile;
