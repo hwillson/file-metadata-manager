@@ -7,10 +7,12 @@ import {
   FormGroup,
   FormControl,
   Button,
+  Checkbox,
 } from 'react-bootstrap';
 import { css, StyleSheet } from 'aphrodite';
 
 import { removeField, renameField } from '../../../api/fields/methods';
+import UtilityStyles from '../../styles/utility';
 
 let styles;
 
@@ -28,6 +30,7 @@ class Field extends Component {
     this.callRemoveField = this.callRemoveField.bind(this);
 
     this.fieldNameInput = null;
+    this.multiValueInput = null;
   }
 
   componentDidUpdate() {
@@ -60,6 +63,7 @@ class Field extends Component {
     renameField.call({
       fieldId: this.props.field._id,
       newName: this.state.newFieldName,
+      multiValue: this.multiValueInput.checked,
     }, (error) => {
       if (!error) {
         this.exitEditMode();
@@ -90,6 +94,13 @@ class Field extends Component {
               value={this.state.newFieldName}
               inputRef={(ref) => { this.fieldNameInput = ref; }}
             />
+            <Checkbox
+              className={css(UtilityStyles.marginLeftRight10)}
+              inputRef={(ref) => { this.multiValueInput = ref; }}
+              defaultChecked={this.props.field.multiValue}
+            >
+              Allow multiple values
+            </Checkbox>
           </FormGroup>
           {' '}
           <Button

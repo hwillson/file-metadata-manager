@@ -5,3 +5,16 @@ a, a:focus {
 .video-content.form-control {
   height: 150px;
 }
+
+.checkbox {
+  padding-left: 0;
+}
+
+.checkbox input,
+.radio input {
+  display: inherit;
+}
+
+.checkbox input[type=checkbox] {
+  margin-right: 5px;
+}

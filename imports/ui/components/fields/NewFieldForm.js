@@ -4,9 +4,12 @@ import {
   FormGroup,
   FormControl,
   Button,
+  Checkbox,
 } from 'react-bootstrap';
+import { css } from 'aphrodite';
 
 import { createField } from '../../../api/fields/methods';
+import UtilityStyles from '../../styles/utility';
 
 class NewFieldForm extends Component {
   constructor(props) {
@@ -16,6 +19,8 @@ class NewFieldForm extends Component {
     };
     this.setFieldName = this.setFieldName.bind(this);
     this.callCreateField = this.callCreateField.bind(this);
+
+    this.multiValueInput = null;
   }
 
   setFieldName(event) {
@@ -28,8 +33,12 @@ class NewFieldForm extends Component {
     event.preventDefault();
     const fieldName = this.state.fieldName;
     if (fieldName) {
-      createField.call({ name: fieldName }, (error) => {
+      createField.call({
+        name: fieldName,
+        multiValue: this.multiValueInput.checked,
+      }, (error) => {
         if (!error) {
+          this.multiValueInput.checked = false;
           this.setState({
             fieldName: '',
           });
@@ -48,6 +57,12 @@ class NewFieldForm extends Component {
             onChange={this.setFieldName}
             value={this.state.fieldName}
           />
+          <Checkbox
+            className={css(UtilityStyles.marginLeftRight10)}
+            inputRef={(ref) => { this.multiValueInput = ref; }}
+          >
+            Allow multiple values
+          </Checkbox>
         </FormGroup>
         {' '}
         <Button

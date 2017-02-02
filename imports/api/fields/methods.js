@@ -8,10 +8,11 @@ const createField = new ValidatedMethod({
   name: 'fields.create',
   validate: new SimpleSchema({
     name: { type: String },
+    multiValue: { type: Boolean },
   }).validator(),
-  run({ name }) {
+  run({ name, multiValue }) {
     const schemaId = camelCase(name.replace(/\W/g, ''));
-    return fieldsCollection.insert({ name, schemaId });
+    return fieldsCollection.insert({ name, multiValue, schemaId });
   },
 });
 
@@ -30,12 +31,13 @@ const renameField = new ValidatedMethod({
   validate: new SimpleSchema({
     fieldId: { type: String },
     newName: { type: String },
+    multiValue: { type: Boolean },
   }).validator(),
-  run({ fieldId, newName }) {
+  run({ fieldId, newName, multiValue }) {
     const newSchemaId = camelCase(newName.replace(/\W/g, ''));
     fieldsCollection.update({
       _id: fieldId,
-    }, { $set: { name: newName, schemaId: newSchemaId } });
+    }, { $set: { name: newName, schemaId: newSchemaId, multiValue } });
   },
 });
 

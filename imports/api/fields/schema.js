@@ -7,6 +7,10 @@ const fieldSchema = new SimpleSchema({
   schemaId: {
     type: String,
   },
+  multiValue: {
+    type: Boolean,
+    defaultValue: false,
+  },
 });
 
 export default fieldSchema;
