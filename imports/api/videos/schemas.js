@@ -25,7 +25,10 @@ const videoSchema = new SimpleSchema({
       disabled: true,
     },
   },
-  publishedDate: {
+  dateUpdated: {
+    type: Date,
+  },
+  datePublished: {
     type: Date,
     uniforms: {
       disabled: true,

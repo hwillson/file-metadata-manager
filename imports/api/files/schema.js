@@ -4,6 +4,9 @@ const fileSchema = new SimpleSchema({
   uid: {
     type: String,
   },
+  dateUpdated: {
+    type: Date,
+  },
   filename: {
     type: String,
     uniforms: {

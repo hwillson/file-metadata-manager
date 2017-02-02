@@ -23,7 +23,9 @@ const loadMetadata = () => new Promise((resolve, reject) => {
 
     worksheet.eachRow((row, rowNumber) => {
       if (rowNumber >= 3) {
-        const rowValues = {};
+        const rowValues = {
+          dateUpdated: new Date(),
+        };
         row.eachCell((cell, colNumber) => {
           try {
             let colHeader = colHeaders[colNumber - 1];

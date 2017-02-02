@@ -23,7 +23,7 @@ const youtube = {
           details = {
             title: snippet.title,
             description: snippet.description,
-            publishedDate: new Date(snippet.publishedAt),
+            datePublished: new Date(snippet.publishedAt),
           };
         }
       }

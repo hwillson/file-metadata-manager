@@ -55,7 +55,7 @@ class VideosTable extends Component {
           </a>
         </Td>
         <Td column="Description" data={video.description} />
-        <Td column="Published Date" data={video.publishedDate} />
+        <Td column="Published Date" data={video.datePublished} />
         <Td column="Action">
           <div>
             <Button

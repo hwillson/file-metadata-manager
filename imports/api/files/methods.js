@@ -6,10 +6,12 @@ const updateFile = new ValidatedMethod({
   name: 'files.update',
   validate: null,
   run({ file }) {
+    const newFile = file;
+    newFile.dateUpdated = new Date();
     filesCollection.update({
-      uid: file.uid,
+      uid: newFile.uid,
     }, {
-      $set: file,
+      $set: newFile,
     }, {
       upsert: true,
     });

@@ -9,6 +9,7 @@ import { _ } from 'meteor/underscore';
 import UtilityStyles from '../../styles/utility';
 import { videoSchema } from '../../../api/videos/schemas';
 import { updateVideo } from '../../../api/videos/methods';
+import SchemaFormFields from '../form/SchemaFormFields';
 
 const EditVideoModal = ({
   showModal,
@@ -17,7 +18,9 @@ const EditVideoModal = ({
   video,
 }) => {
   let formRef;
-  const combinedVideoSchema = new SimpleSchema([videoSchema, metadataSchema]);
+  const combinedVideoSchema = new SimpleSchema([
+    videoSchema, metadataSchema.fieldSchema, metadataSchema.categorySchema,
+  ]);
 
   const callUpdateVideo = (updatedVideo) => {
     const videoData = _.omit(updatedVideo, ['_id']);
@@ -52,17 +55,20 @@ const EditVideoModal = ({
             <Tab eventKey={1} title="Overview">
               <div className={css(UtilityStyles.marginTop20)}>
                 <AutoField name="uid" />
-                <AutoField name="publishedDate" />
+                <AutoField name="datePublished" />
                 <AutoField name="title" />
                 <AutoField name="description" />
                 <AutoField name="content" />
               </div>
             </Tab>
-            <Tab eventKey={2} title="Classification">
+            <Tab eventKey={2} title="Fields">
               <div className={css(UtilityStyles.marginTop20)}>
-                {metadataSchema._schemaKeys.map(key =>
-                  <AutoField key={key} name={key} />,
-                )}
+                <SchemaFormFields schema={metadataSchema.fieldSchema} />
+              </div>
+            </Tab>
+            <Tab eventKey={3} title="Categories">
+              <div className={css(UtilityStyles.marginTop20)}>
+                <SchemaFormFields schema={metadataSchema.categorySchema} />
               </div>
             </Tab>
           </Tabs>

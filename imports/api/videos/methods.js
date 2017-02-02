@@ -20,6 +20,7 @@ const createVideoRecord = new ValidatedMethod({
         if (videoData.title) {
           const subtitleContent = await youtube.fetchSubtitles(uid);
           videoData.content = subtitleContent;
+          videoData.dateUpdated = new Date();
           videosCollection.insert(videoData);
           done = true;
         } else {
@@ -36,7 +37,9 @@ const updateVideo = new ValidatedMethod({
   validate: null,
   run({ videoId, videoData }) {
     if (videoId && videoData) {
-      videosCollection.update({ _id: videoId }, { $set: videoData });
+      const newVideoData = videoData;
+      newVideoData.dateUpdated = new Date();
+      videosCollection.update({ _id: videoId }, { $set: newVideoData });
     }
   },
 });
