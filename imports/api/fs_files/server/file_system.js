@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
-import createHash from 'sha.js';
-
-const sha = createHash('sha256');
+import md5 from 'md5';
 
 const fileSystem = {
   rootDirectory: Meteor.settings.private.files.rootDirectory,
@@ -19,7 +17,7 @@ const fileSystem = {
           files.forEach((file) => {
             const stats = fs.statSync(`${fullDirectory}/${file}`);
             directoryListing.push({
-              uid: sha.update(`${cleanDirectory}/${file}`).digest('hex'),
+              uid: md5(`${cleanDirectory}/${file}`),
               name: file,
               type: (stats.isDirectory() ? 'directory' : 'file'),
               lastModifiedTimestamp: stats.mtime,

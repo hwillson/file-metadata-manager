@@ -53,6 +53,7 @@ const EditFileModal = ({
           submitField={() => null}
           errorsField={() => null}
           model={file}
+          id={fileUid}
         >
           <Tabs id="edit-file-tabs">
             <Tab eventKey={1} title="Overview">

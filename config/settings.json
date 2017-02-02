@@ -12,7 +12,8 @@
       "password": "some-random-password-awesomeness"
     },
     "files": {
-      "rootDirectory": "/nas/files"
+      "rootDirectory": "/nas/files",
+      "metadataSeedFile": "some file path"
     },
     "videos": {
       "youtube": {
