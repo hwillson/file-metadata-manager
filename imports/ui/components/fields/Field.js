@@ -31,6 +31,7 @@ class Field extends Component {
 
     this.fieldNameInput = null;
     this.multiValueInput = null;
+    this.numericInput = null;
   }
 
   componentDidUpdate() {
@@ -64,6 +65,7 @@ class Field extends Component {
       fieldId: this.props.field._id,
       newName: this.state.newFieldName,
       multiValue: this.multiValueInput.checked,
+      numeric: this.numericInput.checked,
     }, (error) => {
       if (!error) {
         this.exitEditMode();
@@ -100,6 +102,13 @@ class Field extends Component {
               defaultChecked={this.props.field.multiValue}
             >
               Allow multiple values
+            </Checkbox>
+            <Checkbox
+              className={css(UtilityStyles.marginLeftRight10)}
+              inputRef={(ref) => { this.numericInput = ref; }}
+              defaultChecked={this.props.field.numeric}
+            >
+              Numeric
             </Checkbox>
           </FormGroup>
           {' '}

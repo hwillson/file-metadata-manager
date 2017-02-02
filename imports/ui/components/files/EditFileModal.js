@@ -11,6 +11,20 @@ import UtilityStyles from '../../styles/utility';
 import saveFile from '../../../api/files/methods';
 import fileSchema from '../../../api/files/schema';
 
+const renderSchemaFields = (schema) => {
+  let content;
+  if (schema) {
+    content = schema._schemaKeys.map((key) => {
+      let fieldContent;
+      if (key.indexOf('$') < 0) {
+        fieldContent = <AutoField key={key} name={key} />;
+      }
+      return fieldContent;
+    });
+  }
+  return content;
+};
+
 const EditFileModal = ({
   showModal,
   closeModal,
@@ -46,7 +60,11 @@ const EditFileModal = ({
       </Modal.Header>
       <Modal.Body>
         <AutoForm
-          schema={new SimpleSchema([fileSchema, metadataSchema])}
+          schema={new SimpleSchema([
+            fileSchema,
+            metadataSchema.fieldSchema,
+            metadataSchema.categorySchema,
+          ])}
           showInlineError
           ref={(ref) => { formRef = ref; }}
           onSubmit={(fileData) => { callSaveFile(fileData); }}
@@ -64,11 +82,14 @@ const EditFileModal = ({
                 <AutoField name="title" />
               </div>
             </Tab>
-            <Tab eventKey={2} title="Classification">
+            <Tab eventKey={2} title="Fields">
               <div className={css(UtilityStyles.marginTop20)}>
-                {metadataSchema._schemaKeys.map(key =>
-                  <AutoField key={key} name={key} />,
-                )}
+                {renderSchemaFields(metadataSchema.fieldSchema)}
+              </div>
+            </Tab>
+            <Tab eventKey={3} title="Categories">
+              <div className={css(UtilityStyles.marginTop20)}>
+                {renderSchemaFields(metadataSchema.categorySchema)}
               </div>
             </Tab>
           </Tabs>

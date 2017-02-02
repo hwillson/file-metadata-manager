@@ -9,10 +9,11 @@ const createField = new ValidatedMethod({
   validate: new SimpleSchema({
     name: { type: String },
     multiValue: { type: Boolean },
+    numeric: { type: Boolean },
   }).validator(),
-  run({ name, multiValue }) {
+  run({ name, multiValue, numeric }) {
     const schemaId = camelCase(name.replace(/\W/g, ''));
-    return fieldsCollection.insert({ name, multiValue, schemaId });
+    return fieldsCollection.insert({ name, multiValue, numeric, schemaId });
   },
 });
 
@@ -32,12 +33,17 @@ const renameField = new ValidatedMethod({
     fieldId: { type: String },
     newName: { type: String },
     multiValue: { type: Boolean },
+    numeric: { type: Boolean },
   }).validator(),
-  run({ fieldId, newName, multiValue }) {
+  run({ fieldId, newName, multiValue, numeric }) {
     const newSchemaId = camelCase(newName.replace(/\W/g, ''));
     fieldsCollection.update({
       _id: fieldId,
-    }, { $set: { name: newName, schemaId: newSchemaId, multiValue } });
+    }, {
+      $set: {
+        name: newName, schemaId: newSchemaId, multiValue, numeric,
+      },
+    });
   },
 });
 

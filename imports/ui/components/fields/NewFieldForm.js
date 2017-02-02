@@ -21,6 +21,7 @@ class NewFieldForm extends Component {
     this.callCreateField = this.callCreateField.bind(this);
 
     this.multiValueInput = null;
+    this.numericInput = null;
   }
 
   setFieldName(event) {
@@ -36,9 +37,11 @@ class NewFieldForm extends Component {
       createField.call({
         name: fieldName,
         multiValue: this.multiValueInput.checked,
+        numeric: this.numericInput.checked,
       }, (error) => {
         if (!error) {
           this.multiValueInput.checked = false;
+          this.numericInput.checked = false;
           this.setState({
             fieldName: '',
           });
@@ -62,6 +65,12 @@ class NewFieldForm extends Component {
             inputRef={(ref) => { this.multiValueInput = ref; }}
           >
             Allow multiple values
+          </Checkbox>
+          <Checkbox
+            className={css(UtilityStyles.marginLeftRight10)}
+            inputRef={(ref) => { this.numericInput = ref; }}
+          >
+            Numeric
           </Checkbox>
         </FormGroup>
         {' '}

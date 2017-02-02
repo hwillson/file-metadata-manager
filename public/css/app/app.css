@@ -18,3 +18,7 @@ a, a:focus {
 .checkbox input[type=checkbox] {
   margin-right: 5px;
 }
+
+form .badge {
+  background-color: #1DC7EA;
+}

@@ -11,6 +11,10 @@ const fieldSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: false,
   },
+  numeric: {
+    type: Boolean,
+    defaultValue: false,
+  },
 });
 
 export default fieldSchema;
