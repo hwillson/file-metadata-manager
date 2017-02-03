@@ -6,6 +6,7 @@ const fileSchema = new SimpleSchema({
   },
   dateUpdated: {
     type: Date,
+    optional: true,
   },
   filename: {
     type: String,

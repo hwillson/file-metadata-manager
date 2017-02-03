@@ -10,10 +10,13 @@ const selectedUid = new ReactiveVar(null);
 const FilesContainer = createContainer(({
   metadataSchema,
 }) => {
-  Meteor.subscribe('files.all');
   let file;
-  if (selectedUid.get()) {
-    file = filesCollection.findOne({ uid: selectedUid.get() });
+  const selectedFileId = selectedUid.get();
+  if (selectedFileId) {
+    const fileHandle = Meteor.subscribe('files.single', selectedFileId);
+    if (fileHandle.ready()) {
+      file = filesCollection.findOne({ uid: selectedFileId });
+    }
   }
 
   return {

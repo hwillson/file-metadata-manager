@@ -76,7 +76,7 @@ const EditFileModal = ({
             </Tab>
             <Tab eventKey={3} title="Categories">
               <div className={css(UtilityStyles.marginTop20)}>
-                <SchemaFormFields schema={metadataSchema.fieldSchema} />
+                <SchemaFormFields schema={metadataSchema.categorySchema} />
               </div>
             </Tab>
           </Tabs>

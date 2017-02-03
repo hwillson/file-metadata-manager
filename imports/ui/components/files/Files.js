@@ -125,7 +125,7 @@ class Files extends Component {
     return (
       <div className="files">
         <Row className="header">
-          <Col md={8}>
+          <Col md={12}>
             <h4 className="title">
               Directory: <FilePath
                 path={this.state.currentDirectory}
@@ -133,7 +133,7 @@ class Files extends Component {
               />
             </h4>
           </Col>
-          <Col md={4} className="text-right">
+          {/* <Col md={4} className="text-right">
             <Button
               bsStyle="info"
               className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
@@ -144,7 +144,7 @@ class Files extends Component {
             <Button bsStyle="info" className="btn-fill">
               <i className="fa fa-plus-circle" /> New File
             </Button>
-          </Col>
+          </Col> */}
         </Row>
         <Row className={css(UtilityStyles.marginTop20)}>
           <Col md={12}>
