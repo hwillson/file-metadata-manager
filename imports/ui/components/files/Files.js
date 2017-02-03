@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { Table, Tr, Td } from 'reactable';
 import { css } from 'aphrodite';
+import { _ } from 'underscore';
 
 import FilePath from './FilePath';
 import NewDirectoryModal from './NewDirectoryModal';
@@ -84,7 +85,7 @@ class Files extends Component {
   }
 
   renderRows() {
-    const content = [];
+    const rows = [];
     const currentDirectory = this.state.currentDirectory;
     this.state.fsFiles.forEach((fsFile) => {
       let link;
@@ -106,7 +107,7 @@ class Files extends Component {
           />
         );
       }
-      content.push(
+      rows.push(
         <Tr key={fsFile.name}>
           <Td column="Name">
             {link}
@@ -118,6 +119,18 @@ class Files extends Component {
         </Tr>,
       );
     });
+
+    let content;
+    if (_.isEmpty(rows)) {
+      content = <p>No files found.</p>;
+    } else {
+      content = (
+        <Table className="table">
+          {rows}
+        </Table>
+      );
+    }
+
     return content;
   }
 
@@ -148,9 +161,7 @@ class Files extends Component {
         </Row>
         <Row className={css(UtilityStyles.marginTop20)}>
           <Col md={12}>
-            <Table className="table">
-              {this.renderRows()}
-            </Table>
+            {this.renderRows()}
           </Col>
         </Row>
 
