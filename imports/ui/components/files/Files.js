@@ -9,6 +9,7 @@ import NewDirectoryModal from './NewDirectoryModal';
 import EditFileModal from './EditFileModal';
 import FileLink from './FileLink';
 import DirectoryLink from './DirectoryLink';
+import FileActionButtons from './FileActionButtons';
 import currentDirectoryListing from '../../../api/fs_files/methods';
 import UtilityStyles from '../../styles/utility';
 
@@ -23,6 +24,7 @@ class Files extends Component {
       selectedFsFile: null,
     };
     this.setCurrentDirectory = this.setCurrentDirectory.bind(this);
+    this.showDirectory = this.showDirectory.bind(this);
     this.openNewDirectoryModal = this.openNewDirectoryModal.bind(this);
     this.openFileMetadataModal = this.openFileMetadataModal.bind(this);
     this.closeNewDirectoryModal = this.closeNewDirectoryModal.bind(this);
@@ -114,7 +116,10 @@ class Files extends Component {
           </Td>
           <Td column="Last Modified" data={fsFile.lastModifiedTimestamp} />
           <Td column="Action">
-            TODO
+            <FileActionButtons
+              fsFile={fsFile}
+              refreshDirectory={this.showDirectory}
+            />
           </Td>
         </Tr>,
       );

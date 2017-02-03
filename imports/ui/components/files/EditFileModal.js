@@ -8,7 +8,7 @@ import { _ } from 'meteor/underscore';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import UtilityStyles from '../../styles/utility';
-import saveFile from '../../../api/files/methods';
+import { updateFile } from '../../../api/files/methods';
 import fileSchema from '../../../api/files/schema';
 import SchemaFormFields from '../form/SchemaFormFields';
 
@@ -22,10 +22,10 @@ const EditFileModal = ({
 }) => {
   let formRef;
 
-  const callSaveFile = (fileData) => {
+  const callUpdateFile = (fileData) => {
     if (fileData) {
       const updatedFile = _.extend({ uid: fsFile.uid }, fileData);
-      saveFile.call({ file: _.omit(updatedFile, '_id') }, (error) => {
+      updateFile.call({ file: _.omit(updatedFile, '_id') }, (error) => {
         if (!error) {
           closeModal();
         }
@@ -54,7 +54,7 @@ const EditFileModal = ({
           ])}
           showInlineError
           ref={(ref) => { formRef = ref; }}
-          onSubmit={(fileData) => { callSaveFile(fileData); }}
+          onSubmit={(fileData) => { callUpdateFile(fileData); }}
           submitField={() => null}
           errorsField={() => null}
           model={file}

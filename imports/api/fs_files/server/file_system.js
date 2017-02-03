@@ -9,7 +9,7 @@ const fileSystem = {
     return new Promise((resolve, reject) => {
       const directoryListing = [];
       const cleanDirectory = this.cleanDirectory(currentDirectory);
-      const fullDirectory = `${this.rootDirectory}/${cleanDirectory}`;
+      const fullDirectory = `${this.rootDirectory}${cleanDirectory}`;
       fs.readdir(fullDirectory, (error, files) => {
         if (error) {
           reject(error);
@@ -21,12 +21,19 @@ const fileSystem = {
               name: file,
               type: (stats.isDirectory() ? 'directory' : 'file'),
               lastModifiedTimestamp: stats.mtime,
+              path: `${fullDirectory}/${file}`,
             });
           });
           resolve(directoryListing);
         }
       });
     });
+  },
+
+  removeFile(path) {
+    if (path) {
+      fs.unlinkSync(path);
+    }
   },
 
   cleanDirectory(directory) {
