@@ -3,6 +3,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import camelCase from 'camelcase';
 
 import fieldsCollection from './collection';
+import filesCollection from '../files/collection';
+import videosCollection from '../videos/collection';
 
 const createField = new ValidatedMethod({
   name: 'fields.create',
@@ -23,7 +25,16 @@ const removeField = new ValidatedMethod({
     fieldId: { type: String },
   }).validator(),
   run({ fieldId }) {
-    fieldsCollection.remove({ _id: fieldId });
+    if (this.userId) {
+      const field = fieldsCollection.findOne({ _id: fieldId });
+      filesCollection.update({}, {
+        $unset: { [field.schemaId]: '' },
+      }, { multi: true });
+      videosCollection.update({}, {
+        $unset: { [field.schemaId]: '' },
+      }, { multi: true });
+      fieldsCollection.remove({ _id: fieldId });
+    }
   },
 });
 
