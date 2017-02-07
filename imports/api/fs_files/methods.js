@@ -22,4 +22,15 @@ const currentDirectoryListing = new ValidatedMethod({
   },
 });
 
-export default currentDirectoryListing;
+const uploadFile = new ValidatedMethod({
+  name: 'files.upload',
+  validate: null,
+  run({ filePath, fileData }) {
+    if (!this.isSimulation && this.userId) {
+      fileSystem.saveFile(filePath, fileData);
+      // TODO - security, validation
+    }
+  },
+});
+
+export { currentDirectoryListing, uploadFile };

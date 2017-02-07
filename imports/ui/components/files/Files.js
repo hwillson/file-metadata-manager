@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { Table, Tr, Td } from 'reactable';
 import { css } from 'aphrodite';
 import { _ } from 'underscore';
 
 import FilePath from './FilePath';
 import NewDirectoryModal from './NewDirectoryModal';
+import NewFileModal from './NewFileModal';
 import EditFileModal from './EditFileModal';
 import FileLink from './FileLink';
 import DirectoryLink from './DirectoryLink';
 import FileActionButtons from './FileActionButtons';
-import currentDirectoryListing from '../../../api/fs_files/methods';
+import { currentDirectoryListing } from '../../../api/fs_files/methods';
 import UtilityStyles from '../../styles/utility';
 
 class Files extends Component {
@@ -21,13 +22,16 @@ class Files extends Component {
       fsFiles: [],
       showNewDirectoryModal: false,
       showFileMetadataModal: false,
+      showNewFileModal: false,
       selectedFsFile: null,
     };
     this.setCurrentDirectory = this.setCurrentDirectory.bind(this);
     this.showDirectory = this.showDirectory.bind(this);
     this.openNewDirectoryModal = this.openNewDirectoryModal.bind(this);
+    this.openNewFileModal = this.openNewFileModal.bind(this);
     this.openFileMetadataModal = this.openFileMetadataModal.bind(this);
     this.closeNewDirectoryModal = this.closeNewDirectoryModal.bind(this);
+    this.closeNewFileModal = this.closeNewFileModal.bind(this);
     this.closeFileMetadataModal = this.closeFileMetadataModal.bind(this);
   }
 
@@ -65,6 +69,10 @@ class Files extends Component {
     this.setState({ showNewDirectoryModal: true });
   }
 
+  openNewFileModal() {
+    this.setState({ showNewFileModal: true });
+  }
+
   openFileMetadataModal(event, selectedFsFile) {
     event.preventDefault();
     this.props.selectedUid.set(selectedFsFile.uid);
@@ -76,6 +84,13 @@ class Files extends Component {
 
   closeNewDirectoryModal() {
     this.setState({ showNewDirectoryModal: false });
+  }
+
+  closeNewFileModal(event, refresh) {
+    if (refresh) {
+      this.showDirectory();
+    }
+    this.setState({ showNewFileModal: false });
   }
 
   closeFileMetadataModal() {
@@ -151,18 +166,22 @@ class Files extends Component {
               />
             </h4>
           </Col>
-          {/* <Col md={4} className="text-right">
-            <Button
+          <Col md={4} className="text-right">
+            {/* <Button
               bsStyle="info"
               className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
               onClick={this.openNewDirectoryModal}
             >
               <i className="fa fa-plus" /> New Directory
-            </Button>
-            <Button bsStyle="info" className="btn-fill">
+            </Button> */}
+            <Button
+              bsStyle="info"
+              className="btn-fill"
+              onClick={this.openNewFileModal}
+            >
               <i className="fa fa-plus-circle" /> New File
             </Button>
-          </Col> */}
+          </Col>
         </Row>
         <Row className={css(UtilityStyles.marginTop20)}>
           <Col md={12}>
@@ -173,6 +192,11 @@ class Files extends Component {
         <NewDirectoryModal
           showModal={this.state.showNewDirectoryModal}
           closeModal={this.closeNewDirectoryModal}
+          currentPath={this.state.currentDirectory}
+        />
+        <NewFileModal
+          showModal={this.state.showNewFileModal}
+          closeModal={this.closeNewFileModal}
           currentPath={this.state.currentDirectory}
         />
         <EditFileModal

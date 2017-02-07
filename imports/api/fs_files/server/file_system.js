@@ -36,6 +36,14 @@ const fileSystem = {
     }
   },
 
+  saveFile(filePath, fileData) {
+    if (filePath && fileData) {
+      const cleanPath = decodeURIComponent(this.cleanDirectory(filePath));
+      const fullPath = `${this.rootDirectory}${cleanPath}`;
+      fs.writeFile(fullPath, fileData);
+    }
+  },
+
   cleanDirectory(directory) {
     let cleanDirectory = '';
     if (directory) {
