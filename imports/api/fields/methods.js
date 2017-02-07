@@ -47,7 +47,9 @@ const renameField = new ValidatedMethod({
     numeric: { type: Boolean },
   }).validator(),
   run({ fieldId, newName, multiValue, numeric }) {
+    const field = fieldsCollection.findOne({ _id: fieldId });
     const newSchemaId = camelCase(newName.replace(/\W/g, ''));
+
     fieldsCollection.update({
       _id: fieldId,
     }, {
@@ -55,6 +57,17 @@ const renameField = new ValidatedMethod({
         name: newName, schemaId: newSchemaId, multiValue, numeric,
       },
     });
+
+    filesCollection.update({}, {
+      $rename: {
+        [field.schemaId]: newSchemaId,
+      },
+    }, { multi: true });
+    videosCollection.update({}, {
+      $rename: {
+        [field.schemaId]: newSchemaId,
+      },
+    }, { multi: true });
   },
 });
 
