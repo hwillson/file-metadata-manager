@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 let fileSystem;
 if (Meteor.isServer) {
@@ -24,13 +25,28 @@ const currentDirectoryListing = new ValidatedMethod({
 
 const uploadFile = new ValidatedMethod({
   name: 'files.upload',
-  validate: null,
+  validate: new SimpleSchema({
+    filePath: { type: String },
+    fileData: { type: String },
+  }).validator(),
   run({ filePath, fileData }) {
     if (!this.isSimulation && this.userId) {
       fileSystem.saveFile(filePath, fileData);
-      // TODO - security, validation
     }
   },
 });
 
-export { currentDirectoryListing, uploadFile };
+const createDirectory = new ValidatedMethod({
+  name: 'files.createDirectory',
+  validate: new SimpleSchema({
+    currentDirectory: { type: String },
+    directoryName: { type: String },
+  }).validator(),
+  run({ currentDirectory, directoryName }) {
+    if (!this.isSimulation && this.userId) {
+      fileSystem.createDirectory(currentDirectory, directoryName);
+    }
+  },
+});
+
+export { currentDirectoryListing, uploadFile, createDirectory };

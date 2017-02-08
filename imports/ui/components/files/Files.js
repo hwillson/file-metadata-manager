@@ -82,7 +82,10 @@ class Files extends Component {
     });
   }
 
-  closeNewDirectoryModal() {
+  closeNewDirectoryModal(event, refresh) {
+    if (refresh) {
+      this.showDirectory();
+    }
     this.setState({ showNewDirectoryModal: false });
   }
 
@@ -158,7 +161,7 @@ class Files extends Component {
     return (
       <div className="files">
         <Row className="header">
-          <Col md={12}>
+          <Col md={8}>
             <h4 className="title">
               Directory: <FilePath
                 path={this.state.currentDirectory}
@@ -167,13 +170,13 @@ class Files extends Component {
             </h4>
           </Col>
           <Col md={4} className="text-right">
-            {/* <Button
+            <Button
               bsStyle="info"
               className={`btn-fill ${css(UtilityStyles.marginRight10)}`}
               onClick={this.openNewDirectoryModal}
             >
               <i className="fa fa-plus" /> New Directory
-            </Button> */}
+            </Button>
             <Button
               bsStyle="info"
               className="btn-fill"

@@ -37,6 +37,8 @@ class NewFileModal extends Component {
           this.setState({ uploading: false });
           if (!error) {
             this.props.closeModal(null, true);
+          } else {
+            console.log(error);
           }
         });
       };

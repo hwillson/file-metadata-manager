@@ -44,6 +44,17 @@ const fileSystem = {
     }
   },
 
+  createDirectory(currentDirectory, directoryName) {
+    const cleanCurrentDirectory = this.cleanDirectory(currentDirectory);
+    const cleanDirectoryName =
+      this.cleanDirectory(directoryName).replace(/\//g, '');
+    const fullDirectory =
+      `${this.rootDirectory}${cleanCurrentDirectory}/${cleanDirectoryName}`;
+    if (!fs.existsSync(fullDirectory)) {
+      fs.mkdirSync(fullDirectory);
+    }
+  },
+
   cleanDirectory(directory) {
     let cleanDirectory = '';
     if (directory) {
