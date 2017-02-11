@@ -4,6 +4,7 @@ import { css } from 'aphrodite';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
 import AutoField from 'uniforms-bootstrap3/AutoField';
 import HiddenField from 'uniforms-bootstrap3/HiddenField';
+import LongTextField from 'uniforms-bootstrap3/LongTextField';
 import { _ } from 'meteor/underscore';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
@@ -67,6 +68,7 @@ const EditFileModal = ({
                 <AutoField name="filename" value={fileName} />
                 <AutoField name="path" value={decodeURI(currentDirectory)} />
                 <AutoField name="title" />
+                <LongTextField name="description" />
               </div>
             </Tab>
             <Tab eventKey={2} title="Fields">

@@ -24,6 +24,10 @@ const fileSchema = new SimpleSchema({
     type: String,
     optional: true,
   },
+  description: {
+    type: String,
+    optional: true,
+  },
 });
 
 export default fileSchema;
