@@ -1,3 +1,3 @@
 import '../both/accounts';
-import './create_admin';
+import './create_accounts';
 import './register_api';

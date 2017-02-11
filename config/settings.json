@@ -7,6 +7,10 @@
     }
   },
   "private": {
+    "staff": {
+      "email": "staff@octonary.com",
+      "password": "some-staff-password"
+    },
     "admin": {
       "email": "admin@octonary.com",
       "password": "some-random-password-awesomeness"
