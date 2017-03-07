@@ -1,6 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import md5 from 'md5';
+
+import filesCollection from '../files/collection';
 
 let fileSystem;
 if (Meteor.isServer) {
@@ -26,12 +29,20 @@ const currentDirectoryListing = new ValidatedMethod({
 const uploadFile = new ValidatedMethod({
   name: 'files.upload',
   validate: new SimpleSchema({
+    filename: { type: String },
     filePath: { type: String },
     fileData: { type: String },
   }).validator(),
-  run({ filePath, fileData }) {
+  run({ filename, filePath, fileData }) {
     if (!this.isSimulation && this.userId) {
-      fileSystem.saveFile(filePath, fileData);
+      const fullPath = `${filePath}/${filename}`;
+      fileSystem.saveFile(fullPath, fileData);
+      filesCollection.insert({
+        uid: md5(fullPath),
+        dateUpdated: new Date(),
+        filename,
+        path: filePath || '/',
+      });
     }
   },
 });

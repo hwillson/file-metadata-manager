@@ -10,7 +10,7 @@ import NewFileModal from './NewFileModal';
 import EditFileModal from './EditFileModal';
 import FileLink from './FileLink';
 import DirectoryLink from './DirectoryLink';
-import FileActionButtons from './FileActionButtons';
+import ActionButtons from './ActionButtons';
 import { currentDirectoryListing } from '../../../api/fs_files/methods';
 import UtilityStyles from '../../styles/utility';
 
@@ -134,7 +134,7 @@ class Files extends Component {
           </Td>
           <Td column="Last Modified" data={fsFile.lastModifiedTimestamp} />
           <Td column="Action">
-            <FileActionButtons
+            <ActionButtons
               fsFile={fsFile}
               refreshDirectory={this.showDirectory}
             />

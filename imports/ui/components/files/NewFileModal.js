@@ -31,7 +31,8 @@ class NewFileModal extends Component {
       const reader = new FileReader();
       reader.onload = () => {
         uploadFile.call({
-          filePath: `${this.props.currentPath}/${fileInfo.name}`,
+          filename: fileInfo.name,
+          filePath: this.props.currentPath,
           fileData: reader.result,
         }, (error) => {
           this.setState({ uploading: false });

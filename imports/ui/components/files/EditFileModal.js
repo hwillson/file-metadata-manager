@@ -36,6 +36,7 @@ const EditFileModal = ({
 
   const fileUid = (fsFile) ? fsFile.uid : null;
   const fileName = (fsFile) ? fsFile.name : '';
+  const directory = decodeURI(currentDirectory) || '/';
   return (
     <Modal show={showModal} onHide={closeModal} animation={false}>
       <Modal.Header closeButton>
@@ -66,7 +67,7 @@ const EditFileModal = ({
               <div className={css(UtilityStyles.marginTop20)}>
                 <HiddenField name="uid" value={fileUid} />
                 <AutoField name="filename" value={fileName} />
-                <AutoField name="path" value={decodeURI(currentDirectory)} />
+                <AutoField name="path" value={directory} />
                 <AutoField name="title" />
                 <LongTextField name="description" />
               </div>

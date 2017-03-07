@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
 import md5 from 'md5';
+import rimraf from 'rimraf';
 
 const fileSystem = {
   rootDirectory: Meteor.settings.private.files.rootDirectory,
@@ -32,7 +33,9 @@ const fileSystem = {
 
   removeFile(path) {
     if (path) {
-      fs.unlinkSync(path);
+      const cleanPath = this.cleanDirectory(path);
+      rimraf.sync(cleanPath);
+      // fs.unlinkSync(path);
     }
   },
 
