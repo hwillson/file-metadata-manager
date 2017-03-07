@@ -3,6 +3,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import camelCase from 'camelcase';
 
 import categoriesCollection from './collection';
+import filesCollection from '../files/collection';
+import videosCollection from '../videos/collection';
 
 const createCategory = new ValidatedMethod({
   name: 'categories.create',
@@ -21,6 +23,17 @@ const removeCategory = new ValidatedMethod({
     categoryId: { type: String },
   }).validator(),
   run({ categoryId }) {
+    const category = categoriesCollection.findOne({ _id: categoryId });
+    filesCollection.update(
+      { [category.schemaId]: { $exists: true } },
+      { $unset: { [category.schemaId]: '' } },
+      { multi: true },
+    );
+    videosCollection.update(
+      { [category.schemaId]: { $exists: true } },
+      { $unset: { [category.schemaId]: '' } },
+      { multi: true },
+    );
     categoriesCollection.remove({ _id: categoryId });
   },
 });
@@ -33,6 +46,17 @@ const renameCategory = new ValidatedMethod({
   }).validator(),
   run({ categoryId, newName }) {
     const newSchemaId = camelCase(newName.replace(/\W/g, ''));
+    const category = categoriesCollection.findOne({ _id: categoryId });
+    filesCollection.update(
+      { [category.schemaId]: { $exists: true } },
+      { $rename: { [category.schemaId]: newSchemaId } },
+      { multi: true },
+    );
+    videosCollection.update(
+      { [category.schemaId]: { $exists: true } },
+      { $rename: { [category.schemaId]: newSchemaId } },
+      { multi: true },
+    );
     categoriesCollection.update({
       _id: categoryId,
     }, { $set: { name: newName, schemaId: newSchemaId } });
@@ -59,6 +83,12 @@ const removeCategoryValue = new ValidatedMethod({
     value: { type: String },
   }).validator(),
   run({ categoryId, value }) {
+    filesCollection.update(
+      { event: value }, { $unset: { event: '' } }, { multi: true },
+    );
+    videosCollection.update(
+      { event: value }, { $unset: { event: '' } }, { multi: true },
+    );
     return categoriesCollection.update({
       _id: categoryId,
     }, { $pull: { values: value } });
