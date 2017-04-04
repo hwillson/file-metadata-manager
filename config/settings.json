@@ -16,7 +16,7 @@
       "password": "some-random-password-awesomeness"
     },
     "files": {
-      "rootDirectory": "/nas/files",
+      "rootDirectory": "/nas/files/ARF_Knowledgebase",
       "metadataSeedFile": "some file path"
     },
     "videos": {
