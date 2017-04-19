@@ -2,6 +2,7 @@
 
 import { render } from 'react-dom';
 
+import './sentry';
 import '../both/accounts';
 import renderRoutes from './routes';
 

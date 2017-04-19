@@ -4,6 +4,9 @@
     "company": {
       "name": "ACME Inc.",
       "url": "http://acmeinc.fake"
+    },
+    "sentry": {
+      "dsn": ""
     }
   },
   "private": {
@@ -26,6 +29,9 @@
           "key": "some youtube key"
         }
       }
+    },
+    "sentry": {
+      "dsn": ""
     }
   }
 }
