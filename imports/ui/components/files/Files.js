@@ -49,7 +49,7 @@ class Files extends Component {
     event.preventDefault();
     const pathMatches = event.target.closest('a').href.match(/^(.*)\/files(.*)$/);
     if (pathMatches.length === 3) {
-      this.setState({ currentDirectory: pathMatches[2] });
+      this.setState({ currentDirectory: decodeURIComponent(pathMatches[2]) });
     } else {
       this.setState({ currentDirectory: '' });
     }
