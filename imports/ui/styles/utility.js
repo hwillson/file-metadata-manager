@@ -14,6 +14,9 @@ const UtilityStyles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  marginTop2: {
+    marginTop: 2,
+  },
   marginTop10: {
     marginTop: 10,
   },

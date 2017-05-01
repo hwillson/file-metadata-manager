@@ -60,7 +60,7 @@ class VideosTable extends Component {
           <div>
             <Button
               bsStyle="default"
-              className={`btn-fill ${css(UtilityStyles.marginRight5)}`}
+              className={`btn-fill ${css(UtilityStyles.marginRight5, UtilityStyles.marginTop2)}`}
               onClick={() => {
                 window.open(`https://www.youtube.com/watch?v=${video.uid}`);
               }}
@@ -71,7 +71,7 @@ class VideosTable extends Component {
             </Button>
             <Button
               bsStyle="danger"
-              className="btn-fill"
+              className={`btn-fill ${css(UtilityStyles.marginTop2)}`}
               onClick={() => { this.callRemoveVideo(video._id); }}
               bsSize="xsmall"
             >
