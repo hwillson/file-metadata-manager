@@ -18,7 +18,13 @@ const createVideoRecord = new ValidatedMethod({
         import youtube from '../youtube/server/youtube';
         const videoData = _.extend({ uid }, youtube.fetchDetails(uid));
         if (videoData.title) {
-          const subtitleContent = await youtube.fetchSubtitles(uid);
+          let subtitleContent;
+          try {
+            subtitleContent = await youtube.fetchSubtitles(uid);
+          } catch (error) {
+            // Auto generated subtitles can't be created
+            subtitleContent = videoData.title;
+          }
           videoData.content = subtitleContent;
           videoData.dateUpdated = new Date();
           videosCollection.insert(videoData);
