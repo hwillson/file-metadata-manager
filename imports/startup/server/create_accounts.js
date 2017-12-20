@@ -1,12 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 
-const createAccount = (email, password, role) => {
-  if (!Accounts.findUserByEmail(email)) {
-    const userId = Accounts.createUser({ email, password });
-    Meteor.users.update({ _id: userId }, { $set: { roles: [role] } });
-  }
-};
+import { createAccount } from '../../api/users/server/create_account';
 
 Meteor.startup(() => {
   // Create the initial staff user account if it doesn't already exist
