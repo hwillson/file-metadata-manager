@@ -13,10 +13,7 @@ import UtilityStyles from '../../styles/utility';
 import { updateFile } from '../../../api/files/methods';
 import fileSchema from '../../../api/files/schema';
 import SchemaFormFields from '../form/SchemaFormFields';
-import {
-  synchDocWithCms,
-  synchFeaturedWithCms,
-} from '../../../api/hooks/methods';
+import { synchDocWithCms } from '../../../api/hooks/methods';
 
 const EditFileModal = ({
   showModal,
@@ -37,16 +34,7 @@ const EditFileModal = ({
           if (saveHooks) {
             Object.keys(fileData).forEach((key) => {
               if (saveHooks[key] === 'synchDocWithCms') {
-                synchDocWithCms.call({
-                  action: fileData[key] === 'Yes' ? 'update' : 'remove',
-                  file: fileData,
-                });
-              }
-              if (saveHooks[key] === 'synchFeaturedWithCms') {
-                synchFeaturedWithCms.call({
-                  action: fileData[key] === 'Yes' ? 'add' : 'remove',
-                  file: fileData,
-                });
+                synchDocWithCms.call({ file: fileData });
               }
             });
           }

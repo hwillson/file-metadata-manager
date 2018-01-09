@@ -12,9 +12,9 @@ function basicAuthHeader() {
 export const synchDocWithCms = new ValidatedMethod({
   name: 'hooks.synchDocWithCms',
   validate: null,
-  run({ action, file }) {
-    if (this.userId && action && file && !this.isSimulation) {
-      if (action === 'update') {
+  run({ file }) {
+    if (this.userId && file && !this.isSimulation) {
+      if (file.topics && file.topics.length > 0) {
         const doc = {
           uid: file.uid,
           title: file.title || null,
@@ -28,8 +28,8 @@ export const synchDocWithCms = new ValidatedMethod({
           source: file.source || null,
           topics: file.topics || null,
           promoImageUrl: file.promoImageUrl || null,
+          featured: file.featured || null,
           featuredSummary: file.featuredSummary || null,
-          featuredOrder: file.featuredOrder || 0,
         };
 
         if (file.companiesOrganizations) {
@@ -52,7 +52,7 @@ export const synchDocWithCms = new ValidatedMethod({
             },
           },
         );
-      } else if (action === 'remove') {
+      } else {
         HTTP.get(
           Meteor.settings.private.cms.apiUrl,
           {
@@ -60,44 +60,6 @@ export const synchDocWithCms = new ValidatedMethod({
               authorization: basicAuthHeader(),
             },
             query: `action=remove_document&uid=${file.uid}`,
-          },
-        );
-      }
-    }
-  },
-});
-
-export const synchFeaturedWithCms = new ValidatedMethod({
-  name: 'hooks.synchFeaturedWithCms',
-  validate: null,
-  run({ action, file }) {
-    if (this.userId && action && file && !this.isSimulation) {
-      if (action === 'add') {
-        HTTP.get(
-          Meteor.settings.private.cms.apiUrl,
-          {
-            headers: {
-              authorization: basicAuthHeader(),
-            },
-            query: 'action=add_document_tag',
-            params: {
-              uid: file.uid,
-              tag: 'featured',
-            },
-          },
-        );
-      } else if (action === 'remove') {
-        HTTP.get(
-          Meteor.settings.private.cms.apiUrl,
-          {
-            headers: {
-              authorization: basicAuthHeader(),
-            },
-            query: 'action=remove_document_tag',
-            params: {
-              uid: file.uid,
-              tag: 'featured',
-            },
           },
         );
       }
