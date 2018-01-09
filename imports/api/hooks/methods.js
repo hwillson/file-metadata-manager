@@ -27,6 +27,9 @@ export const synchDocWithCms = new ValidatedMethod({
           event: file.event || null,
           source: file.source || null,
           topics: file.topics || null,
+          promoImageUrl: file.promoImageUrl || null,
+          featuredSummary: file.featuredSummary || null,
+          featuredOrder: file.featuredOrder || 0,
         };
 
         if (file.companiesOrganizations) {
