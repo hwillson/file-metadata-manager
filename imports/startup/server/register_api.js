@@ -9,3 +9,4 @@ import '../../api/fs_files/methods';
 import '../../api/files/methods';
 import '../../api/files/server/publications';
 import '../../api/files/server/import_files';
+import '../../api/hooks/methods';
