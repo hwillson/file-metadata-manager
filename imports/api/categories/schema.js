@@ -7,6 +7,10 @@ const categorySchema = new SimpleSchema({
   schemaId: {
     type: String,
   },
+  multiselect: {
+    type: Boolean,
+    defaultValue: false,
+  },
   values: {
     type: [String],
     optional: true,

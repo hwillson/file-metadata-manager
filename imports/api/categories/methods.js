@@ -95,10 +95,24 @@ const removeCategoryValue = new ValidatedMethod({
   },
 });
 
+const updateCategoryMultiSelectSetting = new ValidatedMethod({
+  name: 'categories.updateMultiSelectSetting',
+  validate: new SimpleSchema({
+    categoryId: { type: String },
+    multiselect: { type: Boolean },
+  }).validator(),
+  run({ categoryId, multiselect }) {
+    return categoriesCollection.update({
+      _id: categoryId,
+    }, { $set: { multiselect } });
+  },
+});
+
 export {
   createCategory,
   removeCategory,
   renameCategory,
   addCategoryValue,
   removeCategoryValue,
+  updateCategoryMultiSelectSetting,
 };

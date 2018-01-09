@@ -5,6 +5,7 @@ import { _ } from 'meteor/underscore';
 import Loading from '../loading/Loading';
 import CategoryName from './CategoryName';
 import CategoryValues from './CategoryValues';
+import MultiSelectCheckbox from './MultiSelectCheckbox';
 
 const renderRows = (categories) => {
   const content = [];
@@ -15,6 +16,12 @@ const renderRows = (categories) => {
           <CategoryName
             categoryId={category._id}
             categoryName={category.name}
+          />
+        </Td>
+        <Td column="Options">
+          <MultiSelectCheckbox
+            categoryId={category._id}
+            checked={category.multiselect || false}
           />
         </Td>
         <Td column="Values">

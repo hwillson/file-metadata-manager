@@ -20,7 +20,7 @@ const generateMetadataSchema = ({ fields, categories }) => {
     categories.forEach((category) => {
       if (category.values) {
         categorySchemaConfig[category.schemaId] = {
-          type: String,
+          type: (category.multiselect ? [String] : String),
           label: category.name,
           optional: true,
           allowedValues: category.values,
