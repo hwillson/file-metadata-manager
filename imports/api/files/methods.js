@@ -17,6 +17,14 @@ const updateFile = new ValidatedMethod({
     }, {
       upsert: true,
     });
+
+    if (!this.isSimulation) {
+      import { synchDocWithCms } from '../hooks/hooks';
+      const hook = Meteor.settings.private.hooks.update.files;
+      if (hook === 'synchDocWithCms') {
+        synchDocWithCms(file);
+      }
+    }
   },
 });
 
@@ -39,6 +47,14 @@ const deleteFile = new ValidatedMethod({
       }
       import fileSystem from '../fs_files/server/file_system';
       fileSystem.removeFile(filePath);
+
+      if (!this.isSimulation) {
+        import { removeDocFromCms } from '../hooks/hooks';
+        const hook = Meteor.settings.private.hooks.delete.files;
+        if (hook === 'removeDocFromCms') {
+          removeDocFromCms(fileId);
+        }
+      }
     }
   },
 });

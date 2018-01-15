@@ -7,13 +7,11 @@ import HiddenField from 'uniforms-bootstrap3/HiddenField';
 import LongTextField from 'uniforms-bootstrap3/LongTextField';
 import { _ } from 'meteor/underscore';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Meteor } from 'meteor/meteor';
 
 import UtilityStyles from '../../styles/utility';
 import { updateFile } from '../../../api/files/methods';
 import fileSchema from '../../../api/files/schema';
 import SchemaFormFields from '../form/SchemaFormFields';
-import { synchDocWithCms } from '../../../api/hooks/methods';
 
 const EditFileModal = ({
   showModal,
@@ -30,15 +28,6 @@ const EditFileModal = ({
       const updatedFile = _.extend({ uid: fsFile.uid }, fileData);
       updateFile.call({ file: _.omit(updatedFile, '_id') }, (error) => {
         if (!error) {
-          const saveHooks = Meteor.settings.public.saveHooks;
-          if (saveHooks) {
-            Object.keys(fileData).forEach((key) => {
-              if (saveHooks[key] === 'synchDocWithCms') {
-                synchDocWithCms.call({ file: fileData });
-              }
-            });
-          }
-
           closeModal();
         }
       });

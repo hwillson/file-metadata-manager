@@ -38,11 +38,11 @@ class VideosTable extends Component {
     });
   }
 
-  callRemoveVideo(videoId) {
+  callRemoveVideo(videoId, uid) {
     if (confirm(
         'Are you sure you want to remove this video? All metadata will be '
         + 'removed (but the original video on YouTube will stay in place).')) {
-      deleteVideo.call({ videoId });
+      deleteVideo.call({ videoId, uid });
     }
   }
 
@@ -72,7 +72,7 @@ class VideosTable extends Component {
             <Button
               bsStyle="danger"
               className={`btn-fill ${css(UtilityStyles.marginTop2)}`}
-              onClick={() => { this.callRemoveVideo(video._id); }}
+              onClick={() => { this.callRemoveVideo(video._id, video.uid); }}
               bsSize="xsmall"
             >
               <i className="fa fa-minus-circle" />

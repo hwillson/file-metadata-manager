@@ -46,6 +46,14 @@ const updateVideo = new ValidatedMethod({
       const newVideoData = videoData;
       newVideoData.dateUpdated = new Date();
       videosCollection.update({ _id: videoId }, { $set: newVideoData });
+
+      if (!this.isSimulation) {
+        import { synchDocWithCms } from '../hooks/hooks';
+        const hook = Meteor.settings.private.hooks.update.files;
+        if (hook === 'synchDocWithCms') {
+          synchDocWithCms(videoData);
+        }
+      }
     }
   },
 });
@@ -54,10 +62,19 @@ const deleteVideo = new ValidatedMethod({
   name: 'videos.delete',
   validate: new SimpleSchema({
     videoId: { type: String },
+    uid: { type: String },
   }).validator(),
-  run({ videoId }) {
-    if (videoId) {
+  run({ videoId, uid }) {
+    if (videoId && uid) {
       videosCollection.remove({ _id: videoId });
+
+      if (!this.isSimulation) {
+        import { removeDocFromCms } from '../hooks/hooks';
+        const hook = Meteor.settings.private.hooks.delete.files;
+        if (hook === 'removeDocFromCms') {
+          removeDocFromCms(uid);
+        }
+      }
     }
   },
 });
