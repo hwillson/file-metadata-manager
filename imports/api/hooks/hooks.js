@@ -39,6 +39,7 @@ export const synchDocWithCms = (file) => {
       promoImageUrl: file.promoImageUrl || null,
       featured: file.featured || null,
       featuredSummary: file.featuredSummary || null,
+      allowPublicAccess: file.allowPublicAccess || 'No',
     };
 
     if (file.companiesOrganizations) {
