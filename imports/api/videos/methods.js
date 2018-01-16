@@ -48,10 +48,10 @@ const updateVideo = new ValidatedMethod({
       videosCollection.update({ _id: videoId }, { $set: newVideoData });
 
       if (!this.isSimulation) {
-        import { synchDocWithCms } from '../hooks/hooks';
+        import { synchVideoWithCms } from '../hooks/hooks';
         const hook = Meteor.settings.private.hooks.update.files;
-        if (hook === 'synchDocWithCms') {
-          synchDocWithCms(videoData);
+        if (hook === 'synchVideoWithCms') {
+          synchVideoWithCms(videoData);
         }
       }
     }
