@@ -49,7 +49,7 @@ const updateVideo = new ValidatedMethod({
 
       if (!this.isSimulation) {
         import { synchVideoWithCms } from '../hooks/hooks';
-        const hook = Meteor.settings.private.hooks.update.files;
+        const hook = Meteor.settings.private.hooks.update.videos;
         if (hook === 'synchVideoWithCms') {
           synchVideoWithCms(videoData);
         }
@@ -70,7 +70,7 @@ const deleteVideo = new ValidatedMethod({
 
       if (!this.isSimulation) {
         import { removeDocFromCms } from '../hooks/hooks';
-        const hook = Meteor.settings.private.hooks.delete.files;
+        const hook = Meteor.settings.private.hooks.delete.videos;
         if (hook === 'removeDocFromCms') {
           removeDocFromCms(uid);
         }

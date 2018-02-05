@@ -79,6 +79,7 @@ export const synchVideoWithCms = (video) => {
       event: video.event || null,
       source: video.source || null,
       topics: video.topics || null,
+      promoImageUrl: video.promoImageUrl || null,
       featured: video.featured || null,
       featuredSummary: video.featuredSummary || null,
       allowPublicAccess: 'Yes',
